@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+    <meta http-equiv="pragma" content="no-cache" />
+    
+    <title>
+        無聊的村庄
+    </title>
+    <link rel="icon" type="image/png" href="img/icon.png">
+    <link rel="apple-touch-icon" href="img/icon.png">
+    
+    <script src="data0827.js"></script>
+    
+    <script src="script.js"></script>
+    <link rel="stylesheet" type="text/css" href="info/style.css">
+    <style>
+        .build {
+            text-align: center;
+            padding: 20px;
+        }
+        .clans_info img {
+            width: 100%;
+            height: auto;
+        }
+        .Useful_web span {
+            font-weight: bold;
+        }
+        .Useful_web img {
+            height: 20px;
+            width: auto;
+            margin-left: 0px;
+            display: inline;
+        }
+        .coc_gift_pack img{
+            height: 18px;
+            width: auto;
+            margin-left: 0px;
+            display: inline;
+        }
+        .coc_gift_pack_expired img{
+            height: 18px;
+            width: auto;
+            margin-left: 0px;
+            display: inline;
+        }
+        .info span {
+            font-weight: bold;
+        }
+        
+        #coc_gift_pack_expired {
+            display: none;
+        }
+        #other-info {
+            display: none;
+        } 
+    </style>
+    
+</head>
+
+<body>
+	<h1>酒甘倘賣無</h1>
+    <!-- 基本資訊 -->
+    <a href="https://link.clashofclans.com/cnt?action=OpenClanProfile&amp;tag=2GCVULGVP">
+        <span>#2GCVULGVP</span>
+    </a>
+    <div class="clans_info">
+        <img src="img/clans_info.png" loading="lazy">
+    </div>
+    <!-- 禮包 -->
+    <h2>部落衝突禮包:</h2>
+    <div class="coc_gift_pack" id="coc_gift_pack"></div>
+    <hr>
+    
+    <!-- 情報 -->
+    <h2>情報</h2>
+    <div class="info" id="info"></div>
+    <hr>
+    
+    <!-- 實用網站 -->
+    <h2>實用網站:</h2>
+    <div class="Useful_web" id="Useful_web"></div>
+    <hr>
+    
+    <!-- 過期禮包 -->
+    
+    <h2 class="toggle-button" data-target="coc_gift_pack_expired"><span class="indicator">＋</span> 已過期禮包:</h2>
+    <div class="coc_gift_pack_expired" id="coc_gift_pack_expired"></div>
+    
+    <hr>
+    
+    <h2 class="toggle-button" data-target="other-info"><span class="indicator">＋</span> END:</h2>
+    <div class="other-info" id="other-info">
+        <video controls>
+            <source src="img/funny_video_01.mp4" type="video/mp4">
+        </video>
+        <img src="img/我家狗.jpg" loading="lazy">
+    </div>
+    
+    <div class="build">無聊的村庄 建置</div>
+    
+    <script>
+        showData();
+        function showData() {
+            document.getElementById("coc_gift_pack").innerHTML = generate_gift_pack(data,'');
+            document.getElementById("coc_gift_pack_expired").innerHTML = generate_gift_pack(data,'expired');
+            document.getElementById("info").innerHTML = generate_info(data);
+            document.getElementById("Useful_web").innerHTML = generate_Useful_web(data);
+        }
+        
+        // 控制f區塊是否隱形
+        document.querySelectorAll('.toggle-button').forEach(button => {
+            button.addEventListener('click', function() {
+                var targetId = this.getAttribute('data-target');
+                var tableContainer = document.getElementById(targetId);
+                var indicator = this.querySelector('.indicator');
+                if (tableContainer.style.display === "none" || tableContainer.style.display === "") {
+                    tableContainer.style.display = "block";
+                    indicator.textContent = "－";
+                } else {
+                    tableContainer.style.display = "none";
+                    indicator.textContent = "＋";
+                }
+            });
+        });
+    </script>
+</body>
