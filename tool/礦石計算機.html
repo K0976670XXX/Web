@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <title>
+        礦石計算機
+    </title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: center;
+            border: 1px solid black;
+        }
+        .center-text {
+            text-align: center;
+        }
+        /* 輸入框 */
+        .current-level {
+            width: 30px;
+            height: 20px;
+        }
+        .target-level {
+            width: 30px;
+            height: 20px;
+        }
+        .victory-stars-doubled-input {
+            width: 30px;
+            height: 20px;
+        }
+        .base_level {
+            width: 100px;
+            height: 30px;
+            font-size: 25px;
+        }
+        .CW_input_table {
+            width: 40px;
+            height: 20px;
+        }
+        .mine_left {
+            width: 100px;
+            height: 20px;
+            font-size: 18px;
+        }
+        /* 控制隱藏區塊 */
+        #tableContainer_BK {
+            display: block;
+        }
+        #tableContainer_AQ {
+            display: none;
+        } 
+        #tableContainer_GW {
+            display: none;
+        }
+        #tableContainer_RC {
+            display: none;
+        }
+        #starRewardTable {
+            display: none;
+        }
+        #consider_CW_Table {
+            display: none;
+        }
+        
+        /* 勾選 */
+        .checkbox {
+            width: 20px;
+            height: 20px;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .container div {
+            margin: 5px;
+        }
+        /* 其他項 */
+        .build {
+            text-align: center;
+            padding: 20px;
+        }
+        @media (max-width: 600px) {
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+    <h1>礦石計算機:</h1><br>
+    <h2>設定區</h2>
+    <form id="inputForm">
+        <label for="level">大本等級:</label>
+        <input type="text" id="level" name="level" class="base_level"><br><br>
+        
+        <Strong>目前擁有的礦石數量:</Strong><br>&emsp;&emsp;
+        <span>藍礦:</span>
+        <input type="text" id="mine_left_blue" name="mine_left_blue" class="mine_left"><br>&emsp;&emsp;
+        <span>紫礦:</span>
+        <input type="text" id="mine_left_purple" name="mine_left_purple" class="mine_left"><br>&emsp;&emsp;
+        <span>黃礦:</span>
+        <input type="text" id="mine_left_yellow" name="mine_left_yellow" class="mine_left"><br><br>
+        
+        <Strong>考慮商店:</Strong><br>
+        <span>&emsp;突襲幣:</span><br>
+        <div class="container">&emsp;<!-- R -->
+            <div><input type="checkbox" id="blue_R" name="options_S" value="blue_R"><label for="blue_R">500×2藍礦</label></div>
+            <div><input type="checkbox" id="purple_R" name="options_S" value="purple_R"><label for="purple_R">50×2紫礦</label></div>
+            <div><input type="checkbox" id="yellow_R" name="options_S" value="yellow_R"><label for="yellow_R">5×2黃礦</label></div>
+        </div>
+        <span>&emsp;寶石:</span><br>
+        <div class="container">&emsp;<!-- R -->
+            <div><input type="checkbox" id="blue_G" name="options_S" value="blue_G"><label for="blue_G">300×5藍礦</label></div>
+            <div><input type="checkbox" id="purple_G" name="options_S" value="purple_G"><label for="purple_G">60×2紫礦</label></div>
+            <div><input type="checkbox" id="yellow_G" name="options_S" value="yellow_G"><label for="yellow_G">15×1黃礦</label></div>
+        </div>
+        
+        <Strong>考慮勝利之星加倍:</Strong><br>&emsp;
+        <span>倍率:</span>&emsp;<input type="text" id="mag_start" name="mag_start" class="victory-stars-doubled-input"><br>&emsp;
+        <span>天數:</span>&emsp;<input type="text" id="days_start" name="days_start" class="victory-stars-doubled-input"><br>
+        
+        <hr>
+        
+        <h3>點一下英雄名顯示或隱藏表格:</h3><br>
+        <h3 class="toggle-button" data-target="tableContainer_BK"><span class="indicator">－</span> 野蠻人之王</h3>
+        <div id="tableContainer_BK" style="display: block;"></div><br>
+        <h3 class="toggle-button" data-target="tableContainer_AQ"><span class="indicator">＋</span> 弓箭女皇</h3>
+        <div id="tableContainer_AQ"></div><br>
+        <h3 class="toggle-button" data-target="tableContainer_GW"><span class="indicator">＋</span> 大守護者</h3>
+        <div id="tableContainer_GW"></div><br>
+        <h3 class="toggle-button" data-target="tableContainer_RC"><span class="indicator">＋</span> 神盾勇者</h3>
+        <div id="tableContainer_RC"></div><br>
+    </form>
+
+    <div id="messageArea">
+        <table style='display: table'>
+            <thead>
+              <tr>
+                <th style="width: 50%;">總計需要</th>
+                <th style="width: 50%;">還需要(考慮現有礦石)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>藍礦: 0,<br>紫礦: 0,<br>黃礦: 0<br></td>
+                <td>藍礦: 0,<br>紫礦: 0,<br>黃礦: 0<br></td>
+              </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <hr>
+    <h2 class="toggle-button" data-target="starRewardTable"><span class="indicator">＋</span> 每日勝利之星獎勵所需天數</h2>
+    <div id="starRewardTable"></div>
+    
+    <br>
+    <hr>
+    
+    <form id="inputForm_CW">
+      <h2 class="toggle-button" data-target="consider_CW_Table"><span class="indicator">＋</span> 考慮部落戰後所需的天數</h2>
+      <div id="consider_CW_Table"></div>
+    </form>
+    <br>
+    <hr>
+    <h2>參考資料</h2>
+    &emsp;1.<a href="https://supercell.com/en/games/clashofclans/zh/blog/news/12月更新預告5英雄裝備/">
+				<span>部落官網(2023年12月更新預告5英雄裝備) </span>
+		</a><br>
+    &emsp;2.<a href="https://forum.gamer.com.tw/C.php?bsn=23452&snA=14001&tnum=3&bPage=3">
+				<span>Cck製作試算表(部落衝突英雄裝備素材計算器) </span>
+		</a><br>
+    &emsp;3.<a href="https://supercell.com/en/games/clashofclans/zh/blog/release-notes/2024年4月喜怒無常的觸手更新詳情/">
+				<span>部落官網(2024年4月喜怒無常的觸手更新詳情):部落戰戰敗及平手獎勵調整 </span>
+		</a><br>
+    &emsp;4.<a href="https://clashpost.com/upgrade/category/home">
+				<span>部落驿站:裝備資訊 </span>
+		</a><br>
+    <hr>
+    <h2>未來計畫</h2>
+    <span>&emsp;<del>考慮勝利之星加倍 : 輸入倍率、活動天數</del></span><br>
+    <span>&emsp;<del>考慮商店 : 勾選用突襲幣買那些礦石、用寶石買哪些礦石</del></span><br>
+    <span>&emsp;最後更新時間:2024/08/10</span><br>
+    
+    
+    
+    <br><br>
+    <div class="build">無聊的村庄 建置</div>
+</body>
+
+<script>
+    //參數設定設定:
+    //蠻王裝備
+    const equipmentList_BK = [
+        {'name': '野蠻人玩偶', 'type': 'normal'},
+        {'name': '狂暴藥水瓶', 'type': 'normal'},
+        {'name': '震地金靴', 'type': 'normal'},
+        {'name': '嗜血鬍鬚', 'type': 'normal'},
+        {'name': '巨型手套', 'type': 'legendary'},
+        {'name': '尖刺足球', 'type': 'legendary'},
+    ];
+    //女皇裝備
+    const equipmentList_AQ = [
+        {'name': '弓箭手玩偶', 'type': 'normal'},
+        {'name': '隱形藥水瓶', 'type': 'normal'},
+        {'name': '巨型箭矢', 'type': 'normal'},
+        {'name': '天使玩偶', 'type': 'normal'},
+        {'name': '冰封箭矢', 'type': 'legendary'},
+        {'name': '複製魔鏡', 'type': 'legendary'},
+    ];
+    //老頭裝備
+    const equipmentList_GW = [
+        {'name': '永恆書卷', 'type': 'normal'},
+        {'name': '生命寶石', 'type': 'normal'},
+        {'name': '治療書卷', 'type': 'normal'},
+        {'name': '狂暴寶石', 'type': 'normal'},
+        {'name': '巨大火球', 'type': 'legendary'}
+    ];
+    //神盾裝備
+    const equipmentList_RC = [
+        {'name': '追蹤神盾', 'type': 'normal'},
+        {'name': '皇家寶石', 'type': 'normal'},
+        {'name': '野豬騎士玩偶', 'type': 'normal'},
+        {'name': '極速藥水瓶', 'type': 'normal'},
+        {'name': '火箭長矛', 'type': 'legendary'}
+    ];
+    const min_lv_eq = 8;  //解鎖裝備的最低等級
+    const max_lv_eq = 16; //解鎖裝備的最高等級
+    const equipment_lv_max = {
+      "legendary" :{8:12,9:12,10:15,11:15,12:18,13:18,14:21,15:24,16:27},
+      "normal"    :{8:9 ,9:9 ,10:12,11:12,12:15,13:15,14:18,15:18,16:18}
+    };
+    // 裝備升級所需礦石量
+    equipment_mine_num = {
+      'blue_mine'   : [
+             120, 240, 400, 600, 840,
+            1120,1440,1800,1900,2000,
+            2100,2200,2300,2400,2500,
+            2600,2700,2800,2900,3000,
+            3100,3200,3300,3400,3500,3600],
+      'purple_mine' : [  
+              0, 20,  0,  0,100,      //1升到6
+              0,  0,200,  0,  0,      //6升到11
+            400,  0,  0,600,  0,      //11升到16
+              0,600,  0,  0,600,      //16升到21
+              0,  0,600,  0,  0, 600],//21升到27
+      'yellow_mine' : [
+              0,  0,  0,  0,  0,
+              0,  0, 10,  0,  0,
+             20,  0,  0, 30,  0,
+              0, 50,  0,  0,100,
+              0,  0,120,  0,  0, 150]
+    }
+    // 部落戰勝利最大礦石量
+    CW_win_mine = {
+        7: {'blue': 380, 'purple': 15, 'yellow': 0},
+        8: {'blue': 380, 'purple': 15, 'yellow': 0},
+        9: {'blue': 410, 'purple': 18, 'yellow': 0},
+        10: {'blue': 460, 'purple': 21, 'yellow': 3},
+        11: {'blue': 560, 'purple': 24, 'yellow': 3},
+        12: {'blue': 610, 'purple': 27, 'yellow': 4},
+        13: {'blue': 710, 'purple': 30, 'yellow': 4},
+        14: {'blue': 810, 'purple': 33, 'yellow': 5},
+        15: {'blue': 960, 'purple': 36, 'yellow': 5},
+        16: {'blue': 1110, 'purple': 39, 'yellow': 6}
+    }
+    //存放總礦石量
+    var total_blue_mine, total_purple_mine, total_yellow_mine;
+    //存放剩餘礦石量
+    var total_left_blue_mine, total_left_purple_mine, total_left_yellow_mine;
+    total_blue_mine = 0;
+    total_purple_mine = 0;
+    total_yellow_mine = 0;
+    total_left_blue_mine = 0;
+    total_left_purple_mine = 0;
+    total_left_yellow_mine = 0;
+    // 各杯段勝利之星獎勵
+    const starReward_data = {
+        '青銅III' : { 'blue': 125,  'purple': 6  },
+        '青銅II'  : { 'blue': 175,  'purple': 7  },
+        '青銅I'   : { 'blue': 175,  'purple': 8  },
+        '白銀III' : { 'blue': 200,  'purple': 9  },
+        '白銀II'  : { 'blue': 250,  'purple': 10 },
+        '白銀I'   : { 'blue': 275,  'purple': 11 },
+        '黃金III' : { 'blue': 300,  'purple': 12 },
+        '黃金II'  : { 'blue': 325,  'purple': 14 },
+        '黃金I'   : { 'blue': 350,  'purple': 16 },
+        '水晶III' : { 'blue': 375,  'purple': 18 },
+        '水晶II'  : { 'blue': 400,  'purple': 20 },
+        '水晶I'   : { 'blue': 425,  'purple': 22 },
+        '大師III' : { 'blue': 450,  'purple': 24 },
+        '大師II'  : { 'blue': 500,  'purple': 26 },
+        '大師I'   : { 'blue': 525,  'purple': 28 },
+        '冠軍III' : { 'blue': 550,  'purple': 30 },
+        '冠軍II'  : { 'blue': 625,  'purple': 34 },
+        '冠軍I'   : { 'blue': 700,  'purple': 38 },
+        '泰坦III' : { 'blue': 775,  'purple': 42 },
+        '泰坦II'  : { 'blue': 850,  'purple': 46 },
+        '泰坦I'   : { 'blue': 925,  'purple': 50 },
+        '傳說'    : { 'blue': 1000, 'purple': 54 }
+    };
+    //判斷是否為史詩裝備
+    const regex = /legendary/;
+    function proc_legendary(str){
+      if (regex.test(str)) {return 'legendary'} 
+      else {return 'normal'}
+    }
+    
+    // 控制表格是否隱形
+    document.querySelectorAll('.toggle-button').forEach(button => {
+        button.addEventListener('click', function() {
+            var targetId = this.getAttribute('data-target');
+            var tableContainer = document.getElementById(targetId);
+            var indicator = this.querySelector('.indicator');
+            if (tableContainer.style.display === "none" || tableContainer.style.display === "") {
+                tableContainer.style.display = "block";
+                indicator.textContent = "－";
+            } else {
+                tableContainer.style.display = "none";
+                indicator.textContent = "＋";
+            }
+        });
+    });
+    
+    // 生成輸入選單
+    function createTable(equipmentList,heros_name) {
+        const tableContainer = document.getElementById(heros_name);
+        
+        const table = document.createElement('table');
+        table.id = 'mine';
+        table.class = 'mine_table';
+        
+        const thead = document.createElement('thead');
+        thead.innerHTML = `
+            <tr>
+                <th> - </th>
+                <th>裝備名</th>
+                <th>目前等級</th>
+                <th>目標等級</th>
+                <th>藍礦</th>
+                <th>紫礦</th>
+                <th>黃礦</th>
+            </tr>
+        `;
+        table.appendChild(thead);
+        
+        const tbody = document.createElement('tbody');
+        tbody.id = 'equipmentTableBody';
+        
+        equipmentList.forEach((equipment, index) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td><input type="checkbox" name="${equipment.type}" class="checkbox"></td>
+                <td>${equipment.name}</td>
+                <td><input type="text" name="currentLevel${equipment.type}${index}" class="current-level"></td>
+                <td><input type="text" name="targetLevel${equipment.type}${index}" class="target-level"></td>
+                <td class="blue-mineral">0</td>
+                <td class="purple-mineral">0</td>
+                <td class="yellow-mineral">0</td>
+            `;
+            
+            tbody.appendChild(row);
+        });
+
+        table.appendChild(tbody);
+        tableContainer.appendChild(table);
+    }
+    // 更新表單
+    function update_from(){
+        updateMinerals();
+        updateMessageArea();
+        update_starReward_nonCW_days();
+        update_consider_CW_days();//Test
+    }
+    // 當大本等級更新時，裝備目標等級更新
+    document.getElementById('level').addEventListener('input', function(event) {
+        const level = event.target.value;
+        const targetLevelInputs = document.querySelectorAll('.target-level');
+        if (level<min_lv_eq || level>max_lv_eq){return}
+        targetLevelInputs.forEach(input => {
+            equip_type = proc_legendary(input.name);
+            input.value = equipment_lv_max[equip_type][level];
+        });
+    });
+    // 當inputForm 有變動時 更新表單
+    document.getElementById('inputForm').addEventListener('input', function(event) { update_from() });
+    
+    document.getElementById('inputForm_CW').addEventListener('input', function(event) { update_from() });
+    // 計算礦石數
+    function calculate_Minerals(currentLevel,targetLevel) {
+        var blue =0 ;
+        var purple =0 ;
+        var yellow =0 ;
+        for (let lv = currentLevel; lv < targetLevel; lv++) {
+            blue += equipment_mine_num['blue_mine'][lv-1];
+            purple += equipment_mine_num['purple_mine'][lv-1];
+            yellow += equipment_mine_num['yellow_mine'][lv-1];
+        }
+        return {'blue':blue,'purple':purple,'yellow':yellow}
+    }
+    // 更新礦石數
+    function updateMinerals() {
+        const rows = document.querySelectorAll('#mine tbody tr');
+        rows.forEach(row => {
+            const currentLevel = parseInt(row.querySelector('.current-level').value) || 0;
+            const targetLevel = parseInt(row.querySelector('.target-level').value) || 0;
+            const blueMineral = row.querySelector('.blue-mineral');
+            const purpleMineral = row.querySelector('.purple-mineral');
+            const yellowMineral = row.querySelector('.yellow-mineral');
+            // 當設定異常時
+            if (currentLevel==0 || targetLevel==0 || currentLevel>targetLevel){
+              blueMineral.textContent = 0;
+              purpleMineral.textContent = 0;
+              yellowMineral.textContent = 0;
+              return
+            }
+            var left_mine = calculate_Minerals(currentLevel,targetLevel);
+            blueMineral.textContent = left_mine.blue;
+            purpleMineral.textContent = left_mine.purple;
+            yellowMineral.textContent = left_mine.yellow;
+        });
+    }
+    // 計算剩餘礦石
+    function calculate_left_Minerals(){
+        const left_blue = parseInt(document.getElementById('mine_left_blue').value) || 0;
+        const left_purple = parseInt(document.getElementById('mine_left_purple').value) || 0;
+        const left_yellow = parseInt(document.getElementById('mine_left_yellow').value) || 0;
+        
+        total_blue_mine = 0;
+        total_purple_mine = 0;
+        total_yellow_mine = 0;
+        
+        total_left_blue_mine = 0;
+        total_left_purple_mine = 0;
+        total_left_yellow_mine = 0;
+        
+        const rows = document.querySelectorAll('#mine tbody tr');
+        
+        rows.forEach((row, index) => {
+            const isChecked = row.querySelector('input[type="checkbox"]').checked;
+            if (isChecked) {
+                total_blue_mine += parseInt(row.querySelector('.blue-mineral').textContent);
+                total_purple_mine += parseInt(row.querySelector('.purple-mineral').textContent);
+                total_yellow_mine += parseInt(row.querySelector('.yellow-mineral').textContent);
+            }
+        });
+        total_left_blue_mine = Math.max(total_blue_mine - left_blue,0);
+        total_left_purple_mine = Math.max(total_purple_mine - left_purple,0);
+        total_left_yellow_mine = Math.max(total_yellow_mine - left_yellow,0);
+    }
+    // 更新output 區
+    function updateMessageArea() {
+        calculate_left_Minerals();
+        let message = `
+            <table style='display: table'>
+                <thead>
+                  <tr>
+                    <th style="width: 50%;">總計需要</th>
+                    <th style="width: 50%;">還需要(考慮現有礦石)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                        藍礦: ${total_blue_mine},<br>
+                        紫礦: ${total_purple_mine},<br>
+                        黃礦: ${total_yellow_mine}<br>
+                    <td>
+                        藍礦: ${total_left_blue_mine},<br>
+                        紫礦: ${total_left_purple_mine},<br>
+                        黃礦: ${total_left_yellow_mine}<br>
+                    </td>
+                  </tr>
+                </tbody>
+            </table>
+        `;
+        //console.log(message);
+        document.getElementById('messageArea').innerHTML = message;
+    }
+    // 計算商店平均每日可獲得礦石
+    function calculate_avg_daily_mine_from_store(){
+      const checkboxes = document.querySelectorAll('input[name="options_S"]:checked');
+      output_data = {'blue': 0, 'purple': 0, 'yellow': 0}
+      const store_mine_data = {
+        "blue_R"  :{'blue':500/7*2},
+        "purple_R":{'purple':50/7*2},
+        "yellow_R":{'yellow':5/7*2},
+        "blue_G"  :{'blue':300/7*5},
+        "purple_G":{'purple':60/7*2},
+        "yellow_G":{'yellow':15/7*1}
+      }
+      checkboxes.forEach((checkbox) => {
+          key = Object.keys(store_mine_data[checkbox.value])[0]
+          output_data[key] += store_mine_data[checkbox.value][key];
+      });
+      return output_data
+    }
+    // 考慮勝利之星加倍
+    function calculate_Consider_doubling_the_Victory_Stars(left,start_mine,store,CW){
+      var days = parseInt(document.getElementById('days_start').value) || 0;
+      var mag = parseInt(document.getElementById('mag_start').value) || 0;
+      if(days===0 || mag===0){ return left / (start_mine+CW+store) }
+      if(days!==0 && mag!==0){ 
+        var after_left_mine = left-(days*mag*start_mine);
+        if (after_left_mine>0){return (after_left_mine/(start_mine+store+CW))+days}
+        else{return left/(mag*start_mine+store+CW)}
+      }
+      
+    }
+    // 計算每日勝利之星獎勵所需天數_資料
+    function calculate_starReward_data(){
+        const starReward_nonCW_data = [
+            { 'league': '青銅III' , 'blue': 0.0, 'purple': 0.0 },
+            { 'league': '青銅II'  , 'blue': 0.0, 'purple': 0.0 },
+            { 'league': '青銅I'   , 'blue': 0.0, 'purple': 0.0 },
+            { 'league': '白銀III' , 'blue': 0.0, 'purple': 0.0 },
+            { 'league': '白銀II'  , 'blue': 0.0, 'purple': 0.0 },
+            { 'league': '白銀I'   , 'blue': 0.0, 'purple': 0.0 },
+            { 'league': '黃金III' , 'blue': 0.0, 'purple': 0.0 },
+            { 'league': '黃金II'  , 'blue': 0.0, 'purple': 0.0 },
+            { 'league': '黃金I'   , 'blue': 0.0, 'purple': 0.0 },
+            { 'league': '水晶III' , 'blue': 0.0, 'purple': 0.0 },
+            { 'league': '水晶II'  , 'blue': 0.0, 'purple': 0.0 },
+            { 'league': '水晶I'   , 'blue': 0.0, 'purple': 0.0 },
+            { 'league': '大師III' , 'blue': 6.0, 'purple': 0.0 },
+            { 'league': '大師II'  , 'blue': 0.0, 'purple': 0.0 },
+            { 'league': '大師I'   , 'blue': 0.0, 'purple': 0.0 },
+            { 'league': '冠軍III' , 'blue': 0.0, 'purple': 0.0 },
+            { 'league': '冠軍II'  , 'blue': 0.0, 'purple': 0.0 },
+            { 'league': '冠軍I'   , 'blue': 0.0, 'purple': 0.0 },
+            { 'league': '泰坦III' , 'blue': 0.0, 'purple': 0.0 },
+            { 'league': '泰坦II'  , 'blue': 0.0, 'purple': 0.0 },
+            { 'league': '泰坦I'   , 'blue': 0.0, 'purple': 0.0 },
+            { 'league': '傳說'    , 'blue': 0.0, 'purple': 0.0 }
+        ];
+        // 獲取商店可獲得礦石
+        var daily_mine_store = calculate_avg_daily_mine_from_store()
+        
+        starReward_nonCW_data.forEach(item => {
+          const league = item.league;
+          item.blue = calculate_Consider_doubling_the_Victory_Stars(total_left_blue_mine,starReward_data[league]['blue'],daily_mine_store['blue'],0);
+          item.purple = calculate_Consider_doubling_the_Victory_Stars(total_left_purple_mine,starReward_data[league]['purple'],daily_mine_store['purple'],0);
+          if(daily_mine_store['yellow']===0){item.yellow = 999;}
+          else{item.yellow = total_left_yellow_mine / (daily_mine_store['yellow']);}
+        });
+      return starReward_nonCW_data
+    }
+    // 建立每日勝利之星獎勵所需天數的表格:
+    function createTable_starReward_nonCW() {
+        starReward_nonCW_data = calculate_starReward_data();
+
+        const tableContainer = document.querySelector('#starRewardTable');
+        const table = document.createElement('table');
+        table.id = 'starReward';
+        const thead = document.createElement('thead');
+        const tbody = document.createElement('tbody');
+        // thead
+        thead.innerHTML = `
+            <tr>
+              <th colspan="1" rowspan="2" class="center-text">杯段</th>
+              <th colspan="2" rowspan="1" class="center-text">需要的勝利之星獎勵天數</th>
+              <th colspan="1" rowspan="2" class="center-text">預計完成日期</th>
+            </tr>
+            <tr>
+              <th>藍礦</th>
+              <th>紫礦</th>
+            </tr>
+        `;
+        table.appendChild(thead);
+        // tbody
+        starReward_nonCW_data.forEach(level => {
+            const row = document.createElement('tr');
+
+            // 預計完成日期（動態計算）
+            const currentDate = new Date();
+            currentDate.setDate(currentDate.getDate());
+            const formattedDate = `${currentDate.getFullYear()}年${currentDate.getMonth() + 1}月${currentDate.getDate()}日`;
+            
+            row.innerHTML = `
+                  <td>${level.league}</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>${formattedDate}</td>
+            `;
+            tbody.appendChild(row);
+        });
+        table.appendChild(tbody);
+        tableContainer.appendChild(table);
+    }
+    // 更新所需天數
+    function update_starReward_nonCW_days() {
+        starReward_nonCW_data = calculate_starReward_data();
+        const rows = document.querySelectorAll('#starReward tbody tr');
+        var count = 0;
+        rows.forEach(row => {
+            const tds = row.querySelectorAll('td');
+            const league = tds[0].textContent;  // league
+            const blue_day = tds[1];            // blue_day
+            const purple_day = tds[2];          // purple_day
+            const formattedDate = tds[3];       // formattedDate
+            day_blue =  starReward_nonCW_data[count]['blue'].toFixed(2);
+            day_purple =  starReward_nonCW_data[count]['purple'].toFixed(2);
+            
+            const currentDate = new Date();
+            const daysToAdd = Math.ceil(Math.max(day_blue,day_purple));
+            currentDate.setDate(currentDate.getDate() + daysToAdd);
+            
+            blue_day.textContent = day_blue;
+            purple_day.textContent = day_purple;
+            formattedDate.textContent = `${currentDate.getFullYear()}年${currentDate.getMonth() + 1}月${currentDate.getDate()}日`;
+            count+=1;
+        });
+    }
+    
+    // 生成考慮CW的輸入及輸出選單:
+    function create_CW_Table() {
+        const tableContainer = document.getElementById('consider_CW_Table');
+        
+        const span = document.createElement('span');
+        span.innerHTML = '<br>會根據所設定的資料，以大本對應礦石的最大值去做計算，實際礦石量可能略低一點，這取決於對手的防禦匹配值大小。'
+        tableContainer.appendChild(span);
+        
+        const table = document.createElement('table');
+        table.id = 'CW_table';
+        table.class = 'CW_table';
+        table.style = 'display: table'
+        
+        const thead = document.createElement('thead');
+        thead.innerHTML = `
+            <tr>
+                <th colspan="2" rowspan="1" class="center-text">部落戰資料設定</th>
+            </tr>
+        `;
+        table.appendChild(thead);
+        
+        const tbody = document.createElement('tbody');
+        tbody.innerHTML = `
+            <tr>
+                <td>第一刀</td>
+                <td><input type="text" name="first_atk" class="CW_input_table">本</td>
+            </tr>
+            <tr>
+                <td>第二刀</td>
+                <td><input type="text" name="second_atk" class="CW_input_table">本</td>
+            </tr>
+            <tr>
+                <td>勝率</td>
+                <td><input type="text" name="winning_rate" class="CW_input_table">%</td>
+            </tr>
+            <tr>
+                <td>每週對戰次數<br>(不停開戰為3.5)</td>
+                <td><input type="text" name="atk_frequency" class="CW_input_table">次</td>
+            </tr>
+            <tr>
+                <td>平均每日可獲得礦石</td>
+                <td>藍礦:0<br>紫礦:0<br>黃礦:0</td>
+            </tr>
+        `
+
+        table.appendChild(tbody);
+        tableContainer.appendChild(table);
+    }
+    // 建立考慮部落戰後所需天數的表格:
+    function createTable_consider_CW() {
+        starReward_nonCW_data = calculate_starReward_data();
+
+        const tableContainer = document.querySelector('#consider_CW_Table');
+        
+        const span = document.createElement('span');
+        span.innerHTML = '<br><h3>預估時間</h3>'
+        tableContainer.appendChild(span);
+        
+        const table = document.createElement('table');
+        table.id = 'consider_CW';
+        const thead = document.createElement('thead');
+        const tbody = document.createElement('tbody');
+        // thead
+        thead.innerHTML = `
+            <tr>
+              <th colspan="1" rowspan="2" class="center-text">杯段</th>
+              <th colspan="3" rowspan="1" class="center-text">需要的勝利之星獎勵天數</th>
+              <th colspan="1" rowspan="2" class="center-text">預計完成日期</th>
+            </tr>
+            <tr>
+              <th>藍礦</th>
+              <th>紫礦</th>
+              <th>黃礦</th>
+            </tr>
+        `;
+        table.appendChild(thead);
+        // tbody
+        starReward_nonCW_data.forEach(level => {
+            const row = document.createElement('tr');
+
+            // 預計完成日期（動態計算）
+            const currentDate = new Date();
+            currentDate.setDate(currentDate.getDate());
+            const formattedDate = `${currentDate.getFullYear()}年${currentDate.getMonth() + 1}月${currentDate.getDate()}日`;
+            
+            row.innerHTML = `
+                  <td>${level.league}</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>${formattedDate}</td>
+            `;
+            tbody.appendChild(row);
+        });
+        table.appendChild(tbody);
+        tableContainer.appendChild(table);
+    }
+    // 比例分配
+    function proportion(A,B,rate){return A*(rate/100)+B*(1-(rate/100));}
+    // 計算CW可獲得礦石
+    function calculate_CW_mine(){
+        const rows = document.querySelectorAll('#CW_table tbody tr');
+        const first_atk_base = rows[0].querySelector('.CW_input_table').value;
+        const second_atk_base = rows[1].querySelector('.CW_input_table').value;
+        const winning_rate = rows[2].querySelector('.CW_input_table').value;
+        const atk_frequency = rows[3].querySelector('.CW_input_table').value;
+        //console.log(first_atk_base);
+        // 第一刀:
+        if (first_atk_base<=6){
+            blue_atk_1 = 0;
+            purple_atk_1 = 0;
+            yellow_atk_1 = 0;
+        }else{
+            blue_atk_1 = proportion( CW_win_mine[first_atk_base]['blue'] , CW_win_mine[first_atk_base]['blue']*0.5 , winning_rate )*(atk_frequency/7);
+            purple_atk_1 = proportion( CW_win_mine[first_atk_base]['purple'] , CW_win_mine[first_atk_base]['purple']*0.5 , winning_rate )*(atk_frequency/7);
+            yellow_atk_1 = proportion( CW_win_mine[first_atk_base]['yellow'] , CW_win_mine[first_atk_base]['yellow']*0.5 , winning_rate )*(atk_frequency/7);
+        }
+        // 第二刀:
+        if (second_atk_base<=6){
+            blue_atk_2 = 0;
+            purple_atk_2 = 0;
+            yellow_atk_2 = 0;
+        }else{
+            blue_atk_2 = proportion( CW_win_mine[second_atk_base]['blue'] , CW_win_mine[second_atk_base]['blue']*0.5 , winning_rate )*(atk_frequency/7);
+            purple_atk_2 = proportion( CW_win_mine[second_atk_base]['purple'] , CW_win_mine[second_atk_base]['purple']*0.5 , winning_rate )*(atk_frequency/7);
+            yellow_atk_2 = proportion( CW_win_mine[second_atk_base]['yellow'] , CW_win_mine[second_atk_base]['yellow']*0.5 , winning_rate )*(atk_frequency/7);
+        }
+        // 平均每日可獲得的礦石
+        every_day_CW_blue = blue_atk_1 + blue_atk_2;
+        every_day_CW_purple = purple_atk_1 + purple_atk_2;
+        every_day_CW_yellow = yellow_atk_1 + yellow_atk_2;
+        return {'blue': every_day_CW_blue, 'purple': every_day_CW_purple, 'yellow': every_day_CW_yellow}
+    }
+    function calculate_consider_CW_data(CW_mine){
+        const consider_CW_data = [
+            { 'league': '青銅III' , 'blue': 0.0, 'purple': 0.0 ,'yellow': 0.0 },
+            { 'league': '青銅II'  , 'blue': 0.0, 'purple': 0.0 ,'yellow': 0.0 },
+            { 'league': '青銅I'   , 'blue': 0.0, 'purple': 0.0 ,'yellow': 0.0 },
+            { 'league': '白銀III' , 'blue': 0.0, 'purple': 0.0 ,'yellow': 0.0 },
+            { 'league': '白銀II'  , 'blue': 0.0, 'purple': 0.0 ,'yellow': 0.0 },
+            { 'league': '白銀I'   , 'blue': 0.0, 'purple': 0.0 ,'yellow': 0.0 },
+            { 'league': '黃金III' , 'blue': 0.0, 'purple': 0.0 ,'yellow': 0.0 },
+            { 'league': '黃金II'  , 'blue': 0.0, 'purple': 0.0 ,'yellow': 0.0 },
+            { 'league': '黃金I'   , 'blue': 0.0, 'purple': 0.0 ,'yellow': 0.0 },
+            { 'league': '水晶III' , 'blue': 0.0, 'purple': 0.0 ,'yellow': 0.0 },
+            { 'league': '水晶II'  , 'blue': 0.0, 'purple': 0.0 ,'yellow': 0.0 },
+            { 'league': '水晶I'   , 'blue': 0.0, 'purple': 0.0 ,'yellow': 0.0 },
+            { 'league': '大師III' , 'blue': 6.0, 'purple': 0.0 ,'yellow': 0.0 },
+            { 'league': '大師II'  , 'blue': 0.0, 'purple': 0.0 ,'yellow': 0.0 },
+            { 'league': '大師I'   , 'blue': 0.0, 'purple': 0.0 ,'yellow': 0.0 },
+            { 'league': '冠軍III' , 'blue': 0.0, 'purple': 0.0 ,'yellow': 0.0 },
+            { 'league': '冠軍II'  , 'blue': 0.0, 'purple': 0.0 ,'yellow': 0.0 },
+            { 'league': '冠軍I'   , 'blue': 0.0, 'purple': 0.0 ,'yellow': 0.0 },
+            { 'league': '泰坦III' , 'blue': 0.0, 'purple': 0.0 ,'yellow': 0.0 },
+            { 'league': '泰坦II'  , 'blue': 0.0, 'purple': 0.0 ,'yellow': 0.0 },
+            { 'league': '泰坦I'   , 'blue': 0.0, 'purple': 0.0 ,'yellow': 0.0 },
+            { 'league': '傳說'    , 'blue': 0.0, 'purple': 0.0 ,'yellow': 0.0 }
+        ];
+        // 獲取商店可獲得礦石
+        var daily_mine_store = calculate_avg_daily_mine_from_store();
+        
+        consider_CW_data.forEach(item => {
+          const league = item.league;
+          item.blue = calculate_Consider_doubling_the_Victory_Stars(total_left_blue_mine,starReward_data[league]['blue'],daily_mine_store['blue'],CW_mine['blue']);
+          item.purple = calculate_Consider_doubling_the_Victory_Stars(total_left_purple_mine,starReward_data[league]['purple'],daily_mine_store['purple'],CW_mine['purple']);
+          item.yellow = total_left_yellow_mine / (CW_mine['yellow']+daily_mine_store['yellow']);
+        });
+      return consider_CW_data
+    }
+    // 更新 考慮CW後 的表格
+    function update_consider_CW_days(){
+        CW_mine = calculate_CW_mine();
+        consider_CW_data = calculate_consider_CW_data(CW_mine);
+        
+        const rows = document.querySelectorAll('#consider_CW_Table tbody tr');
+        var count = 0;
+        rows.forEach((row,index) => {
+            if(index == 4){
+                const tds = row.querySelectorAll('td');
+                const msg = tds[1];
+                msg.innerHTML = `藍礦:${CW_mine['blue'].toFixed(2)}<br>紫礦:${CW_mine['purple'].toFixed(2)}<br>黃礦:${CW_mine['yellow'].toFixed(2)}`
+            }
+            else if (index>=5){
+                const tds = row.querySelectorAll('td');
+                const league = tds[0].textContent;  // league
+                const blue_day = tds[1];            // blue_day
+                const purple_day = tds[2];          // purple_day
+                const yellow_day = tds[3];          // yellow_day
+                const formattedDate = tds[4];       // formattedDate
+                day_blue =  consider_CW_data[count]['blue'].toFixed(2);
+                day_purple =  consider_CW_data[count]['purple'].toFixed(2);
+                day_yellow =  consider_CW_data[count]['yellow'].toFixed(2);
+                
+                const currentDate = new Date();
+                const daysToAdd = Math.ceil(Math.max(Math.max(day_blue,day_purple),day_yellow));
+                currentDate.setDate(currentDate.getDate() + daysToAdd);
+                
+                blue_day.textContent = day_blue;
+                purple_day.textContent = day_purple;
+                yellow_day.textContent = day_yellow;
+                formattedDate.textContent = `${currentDate.getFullYear()}年${currentDate.getMonth() + 1}月${currentDate.getDate()}日`;
+                count+=1; 
+            }
+        });
+    }
+    
+    // 調用函式
+    createTable(equipmentList_BK,'tableContainer_BK');
+    createTable(equipmentList_AQ,'tableContainer_AQ');
+    createTable(equipmentList_GW,'tableContainer_GW');
+    createTable(equipmentList_RC,'tableContainer_RC');
+    
+    createTable_starReward_nonCW();
+    create_CW_Table()
+    createTable_consider_CW()
+    
+</script>
+
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <!--<link rel="stylesheet" type="text/css" href="https://filedn.com/lVs46506FUtkkG8EGlNo978/website/tool/style.css">-->
+    <title>無聊的村庄_COC查看玩家科技資訊</title>
+    <style>
+        body {
+            text-align: center;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 80%;
+            max-width: 300px;
+        }
+        button[type="submit"] {
+            padding: 8px 16px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        table {
+            border-collapse: collapse;
+            margin: 0 auto; /* 水平置中 */
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #ddd; /* 表格邊框 */
+            padding: 8px;
+            text-align: center;/*left;*/
+        }
+        #loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+        #overtime {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+        #csvTable {
+            margin-top: 20px;
+        }
+        /* 媒體查詢：針對手機端設備調整樣式 */
+        @media only screen and (max-width: 600px) {
+            input[type="text"] {
+                width: 100%;
+            }
+            button[type="submit"] {
+                width: 100%;
+            }
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>COC查看玩家科技資訊</h1>
+    <form id="dataForm">
+        <label for="idInput">ID:</label>
+        <input type="text" id="idInput" name="id" placeholder="輸入玩家ID">
+        <button type="submit">送出</button>
+    </form>
+    
+    <div id="loading">Loading...</div>
+    <div id="overtime">資料獲取失敗!!!</div>
+    
+    <div id="csvTable"></div>
+    <a href="https://link.clashofclans.com/cnt?action=OpenPlayerProfile&tag=8RJU2RVY8">製作者:無聊的村庄</a>
+    <script>
+        document.getElementById("dataForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let id = document.getElementById("idInput").value;
+            showElement(true,'loading');
+            postData(id);
+        });
+        async function postData(id) {
+          const url = 'https://rfqdew9xda.execute-api.ap-northeast-1.amazonaws.com/DEFO/';
+          //const url = 'http://127.0.0.1:1880/';
+          try {
+            // Make the POST request
+            const response = await fetch(url, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({ 'id': id ,'apptype':'COC_Get_Info'})
+            });
+
+            // Parse the response
+            const data = await response.json();
+            showElement(false, 'loading');
+            showCSVData(data);
+          } catch (error) {
+            // Handle any errors
+            console.log('Error:', error);
+            showElement(false, 'loading');
+            showElement(true, 'overtime');
+          }
+        }
+        
+        
+        function procMark(str) {
+            let formattedColumn = str;
+            if (str.match(/^\*\*(.*?)\*\*$/)) {
+                // 如果column以**開頭和結尾，則將其視為粗體
+                formattedColumn = `<strong>${str.substring(2, str.length - 2)}</strong>`;
+            } else if (str.match(/^\*(.*?)\*$/)) {
+                // 如果column以*開頭和結尾，則將其視為斜體
+                formattedColumn = `<em>${str.substring(1, str.length - 1)}</em>`;
+            }else if (str.match(/^~~(.*?)~~$/)) {
+                // 如果column以~~開頭和結尾，則將其視為刪除線
+                formattedColumn = `<del>${str.substring(2, str.length - 2)}</del>`;
+            }
+            return formattedColumn;
+        }
+
+        function showElement(isOpen,Element) {
+            const loadingDiv = document.getElementById(Element);
+            if (isOpen) {loadingDiv.style.display = "block";}
+            else {loadingDiv.style.display = "none";}
+        }
+        function showCSVData(jsonData) {
+            let tableHTML = '';
+            var keys = Object.keys(jsonData);
+            keys.sort((a, b) => {
+                let numA = parseInt(a.match(/\d+/)[0]);
+                let numB = parseInt(b.match(/\d+/)[0]);
+                return numA - numB;
+            });
+            var key = '';
+            for (var index in keys) {
+                key = keys[index];
+                const csvData = jsonData[key];
+                const rows = csvData.split('\n');
+                tableHTML += `<h2 id="title">${key.substring(2)}</h2>`;
+                tableHTML += '<table>';
+                if(key!=='04實驗室升級'){
+                  rows.forEach(row => {
+                      tableHTML += '<tr>';
+                      const columns = row.split(',');
+                      columns.forEach(column => {
+                          tableHTML += `<td>${procMark(column)}</td>`;
+                      });
+                      tableHTML += '</tr>';
+                  });
+                  tableHTML += '</table>';
+                }
+                else{
+                    rows.forEach((row, rowIndex) => {
+                        tableHTML += '<tr>';
+                        const columns = row.split(',');
+                        columns.forEach((column, colIndex) => {
+                            //表頭行:
+                            if(rowIndex === 0){
+                                if(colIndex === 0){tableHTML += `<th>selected</th><th>${column}</th>`;}
+                                else{tableHTML += `<th>${column}</th>`;}
+                            }
+                            //末行:
+                            else if(rowIndex === rows.length-1){
+                                if(colIndex === 0){tableHTML += `<th>${columns[0]}</th><th></th>`;}
+                                else{tableHTML += `<th>${column}</th>`;}
+                            }
+                            //其餘行:
+                            else{
+                                if(columns.length==1){tableHTML += `<th>${columns[0]}</th>`;}
+                                else if(colIndex === 0){tableHTML += `<td><input type="checkbox" id="checkbox${rowIndex}" name="selected" value="${columns[2]}" onchange="updateTotal()"></td><td>${column}</td>`}
+                                else{tableHTML += `<td>${column}</td>`;}
+                            }
+                        });
+                        tableHTML += '</tr>';
+                    });
+                    // 新增總和行
+                    tableHTML += `<tr><td colspan="2">排除後時間</td><td></td><td id="totalScore">0</td></tr>`;
+                    tableHTML += '</table>';
+                }
+            }
+            document.getElementById("csvTable").innerHTML = tableHTML;
+        }
+        // 當複選框狀態改變時更新總分數
+        function updateTotal() {
+            let totalScore = 0;
+            const checkboxes = document.getElementsByName('selected');
+            checkboxes.forEach((checkbox, index) => {
+                if (checkbox.checked) {
+                    const score = parseFloat(checkbox.value);
+                    totalScore += score;
+                }
+            });
+            document.getElementById("totalScore").innerText = totalScore+'天';
+        }
+        
+    </script>
+</body>
+</html>

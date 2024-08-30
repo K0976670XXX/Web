@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <!--<link rel="stylesheet" type="text/css" href="https://filedn.com/lVs46506FUtkkG8EGlNo978/website/tool/style.css">-->
+    <style>
+        body {
+            text-align: center;
+        }
+        #loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+        #overtime {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+        #csvTable {
+            margin-top: 20px;
+        }
+
+        /* 媒體查詢：針對手機端設備調整樣式 */
+        @media only screen and (max-width: 600px) {
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>部落管理</h1>
+    
+    <div id="loading">Loading...</div>
+    <div id="overtime">資料獲取失敗!!!</div>
+    
+    <div id="csvTable"></div>
+    <a href="https://link.clashofclans.com/cnt?action=OpenPlayerProfile&tag=8RJU2RVY8">製作者:無聊的村庄</a>
+    <script>
+
+        showElement(false, 'overtime');
+        showElement(true,'loading');
+        postData();
+        async function postData() {
+          const url = 'https://rfqdew9xda.execute-api.ap-northeast-1.amazonaws.com/DEFO/';
+          //const url = 'http://127.0.0.1:1880/';
+          try {
+            // Make the POST request
+            const response = await fetch(url, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({ 'id': 0, 'apptype': 'Clans_Manage', 'mode': 'member' })
+            });
+
+            // Parse the response
+            const data = await response.json();
+            showElement(false, 'loading');
+            showCSVData(data);
+          } catch (error) {
+            // Handle any errors
+            console.log('Error:', error);
+            showElement(false, 'loading');
+            showElement(true, 'overtime');
+          }
+        }
+
+        function showElement(isOpen,Element) {
+            const loadingDiv = document.getElementById(Element);
+            if (isOpen) {loadingDiv.style.display = "block";}
+            else {loadingDiv.style.display = "none";}
+        }
+        function procMark(str) {
+            let formattedColumn = str;
+            if (str.match(/^\*\*(.*?)\*\*$/)) {
+                // 如果column以**開頭和結尾，則將其視為粗體
+                formattedColumn = `<strong>${str.substring(2, str.length - 2)}</strong>`;
+            } else if (str.match(/^\*(.*?)\*$/)) {
+                // 如果column以*開頭和結尾，則將其視為斜體
+                formattedColumn = `<em>${str.substring(1, str.length - 1)}</em>`;
+            }else if (str.match(/^~~(.*?)~~$/)) {
+                // 如果column以~~開頭和結尾，則將其視為刪除線
+                formattedColumn = `<del>${str.substring(2, str.length - 2)}</del>`;
+            }else if (str.match(/^<c2>(.*?)<c>$/)) {
+                // 如果column以<c2>開頭和<c>結尾，則將其視為紅色字
+                formattedColumn = `<span style="color: red;">${str.substring(4, str.length - 3)}</span>`;
+            }else if (str.match(/^<c3>(.*?)<c>$/)) {
+                // 如果column以<c3>開頭和<c>結尾，則將其視為綠色字
+                formattedColumn = `<span style="color: green;">${str.substring(4, str.length - 3)}</span>`;
+            }
+            return formattedColumn;
+        }
+        function showCSVData(jsonData) {
+            let tableHTML = '';
+            var keys = Object.keys(jsonData);
+            keys.sort((a, b) => {
+                let numA = parseInt(a.match(/\d+/)[0]);
+                let numB = parseInt(b.match(/\d+/)[0]);
+                return numA - numB;
+            });
+            var key = '';
+            for (var index in keys) {
+              key = keys[index];
+              const csvData = jsonData[key];
+              const rows = csvData.split('\n');
+              tableHTML += `<h2 id="title">${key.substring(2)}</h2>`;
+              tableHTML += '<table>';
+                rows.forEach(row => {
+                    tableHTML += '<tr>';
+                    const columns = row.split(',');
+                    columns.forEach(column => {
+                        tableHTML += `<td>${procMark(column)}</td>`;
+                        
+                    });
+                    tableHTML += '</tr>';
+                });
+                tableHTML += '</table>';
+            }
+            document.getElementById("csvTable").innerHTML = tableHTML;
+        }
+        
+        //var jsonData = {"00TEST": '*t0*,**t1**,~~t2~~\n0,**1**,2\n3,*4*,~~5~~'};
+        //showCSVData(jsonData);
+        
+    </script>
+</body>
+</html>
