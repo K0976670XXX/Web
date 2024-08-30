@@ -94,31 +94,33 @@
             showElement(true,'loading');
             postData(id);
         });
-        async function postData(id) {
+        async function postData() {
           const url = 'https://rfqdew9xda.execute-api.ap-northeast-1.amazonaws.com/DEFO/';
-          //const url = 'http://127.0.0.1:1880/';
+          const requestData = { 'id': id ,'apptype':'COC_Get_Info'};
+
           try {
-            // Make the POST request
             const response = await fetch(url, {
               method: "POST",
-              headers: {
-                "Content-Type": "application/json"
-              },
-              body: JSON.stringify({ 'id': id ,'apptype':'COC_Get_Info'})
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(requestData)
             });
-
-            // Parse the response
-            const data = await response.json();
-            showElement(false, 'loading');
-            showCSVData(data);
+            showCSVData(await response.json());
           } catch (error) {
-            // Handle any errors
-            console.log('Error:', error);
+            try {
+              const retryResponse = await fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(requestData)
+              });
+              showCSVData(await retryResponse.json());
+            } catch (retryError) {
+              console.log('Error:', retryError);
+              showElement(true, 'overtime');
+            }
+          } finally {
             showElement(false, 'loading');
-            showElement(true, 'overtime');
           }
         }
-        
         
         function procMark(str) {
             let formattedColumn = str;
