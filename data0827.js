@@ -1,14 +1,14 @@
 ﻿var data = {
   "coc_gift_pack": {
+  },
+  "coc_gift_pack_expired":{
     "2024_8月_動漫與部落":{
           "time":"2024/08/09",
           "url":"https://link.clashofclans.com/cnt/?action=voucher&code=3d599d19-f313-4a2c-86db-013264bfdb5b",
           "code":"3d599d19-f313-4a2c-86db-013264bfdb5b",
           "markdown":"(img)[crystals]x150 + (img)[medals]x150",
           "img":['webp_img/crystals.webp','webp_img/medals.webp']
-      }
-  },
-  "coc_gift_pack_expired":{
+    },
     "2024_7月_自然之戰":{
           "time":"2024/07/27",
           "url":"https://link.clashofclans.com/cnt/?action=voucher&code=a732966a-d7cb-46d6-b0e9-696fe919f1ae",
