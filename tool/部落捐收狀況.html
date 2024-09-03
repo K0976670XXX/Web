@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>捐收狀況資料</title>
+    <script src="coc_drt_data_json.js"></script><!---->
+    <!--<link rel="stylesheet" type="text/css" href="https://filedn.com/lVs46506FUtkkG8EGlNo978/website/tool/style.css">-->
+    <style>
+        body {
+            text-align: center;
+        }
+        #loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+        #overtime {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .chart-container {
+            width: 90%;
+            margin: 20px auto;
+        }
+        .chart-title {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 10px;
+        }
+        .chart-msg {
+            text-align: center;
+        }
+        /* 媒體查詢：針對手機端設備調整樣式 */
+        @media only screen and (max-width: 600px) {
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>捐收狀況資料</h1>
+    
+    <div id="loading">Loading...</div>
+    <div id="overtime">資料獲取失敗!!!</div>
+    
+    <div id="charts"></div>
+    <a href="https://link.clashofclans.com/cnt?action=OpenPlayerProfile&tag=8RJU2RVY8">製作者:無聊的村庄</a>
+    <script>
+        const T1 = "2024-07-26_05";
+        const T2 = "2024-08-26_05";
+        //const T2 = "2024-09-29_05";
+        
+        showElement(false, 'overtime');
+        showElement(true,'loading');
+        postData();
+        //showChartsData(datasets);
+        async function postData() {
+          const url = 'https://rfqdew9xda.execute-api.ap-northeast-1.amazonaws.com/DEFO/';
+          //const url = 'http://127.0.0.1:1880/';
+          const requestData = { 'id': 0, 'apptype': 'Clans_Donation_status','T1':T1,'T2':T2};
+
+          try {
+            const response = await fetch(url, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(requestData)
+            });
+            showChartsData(await response.json());
+          } catch (error) {
+            try {
+              const retryResponse = await fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(requestData)
+              });
+              showChartsData(await retryResponse.json());
+            } catch (retryError) {
+              console.log('Error:', retryError);
+              showElement(true, 'overtime');
+            }
+          } finally {
+            showElement(false, 'loading');
+          }
+        }
+
+        function showElement(isOpen,Element) {
+            const loadingDiv = document.getElementById(Element);
+            if (isOpen) {loadingDiv.style.display = "block";}
+            else {loadingDiv.style.display = "none";}
+        }
+        //建立圖表
+        function createChart(containerId, label, data) {
+            const ctx = document.getElementById(containerId).getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.t,
+                    datasets: [
+                        {
+                            label: `捐兵`,
+                            data: data.d,
+                            fill: false,
+                            borderColor: 'rgb(75, 192, 192)',
+                            tension: 0.1
+                        },
+                        {
+                            label: `收兵`,
+                            data: data.r,
+                            fill: false,
+                            borderColor: 'rgb(255, 99, 132)',
+                            tension: 0.1
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Time (t)'
+                            }
+                        },
+                        y: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Value'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        function showChartsData(datasets) {
+            const chartsContainer = document.getElementById('charts');
+
+            Object.keys(datasets).forEach((key, index) => {
+                // Create a new title element (h2) for each chart
+                const title = document.createElement('h2');
+                title.className = 'chart-title';
+                title.innerText = key;
+                chartsContainer.appendChild(title);
+                
+                // Display the msg
+                const msg = document.createElement('h5');
+                msg.className = 'chart-msg';
+                msg.innerText = datasets[key]['msg'];
+                chartsContainer.appendChild(msg);
+
+                // Create a new canvas element for each chart
+                const canvas = document.createElement('canvas');
+                canvas.id = `chart-${index}`;
+                canvas.className = 'chart-container';
+                chartsContainer.appendChild(canvas);
+
+                // Create chart for the current dataset
+                createChart(canvas.id, key, datasets[key]);
+
+                // Add a horizontal line as a separator after each chart
+                const separator = document.createElement('hr');
+                separator.className = 'chart-separator';
+                chartsContainer.appendChild(separator);
+            });
+        }
+    </script>
+</body>
+</html>
