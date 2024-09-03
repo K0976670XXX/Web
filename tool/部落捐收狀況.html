@@ -2,6 +2,7 @@
 <html lang="zh-TW">
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -9,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>捐收狀況資料</title>
-    <script src="coc_drt_data_json.js"></script><!---->
+    <!--<script src="coc_drt_data_json.js"></script>-->
     <!--<link rel="stylesheet" type="text/css" href="https://filedn.com/lVs46506FUtkkG8EGlNo978/website/tool/style.css">-->
     <style>
         body {
@@ -80,11 +81,11 @@
         
         showElement(false, 'overtime');
         showElement(true,'loading');
-        //postData();
+        postData();
         
-        showElement(false,'loading');
-        showTotalData(datasets);
-        showChartsData(datasets);
+        //showElement(false,'loading');
+        //showTotalData(datasets);
+        //showChartsData(datasets);
         
         async function postData() {
           const url = 'https://rfqdew9xda.execute-api.ap-northeast-1.amazonaws.com/DEFO/';
@@ -165,6 +166,7 @@
             });
         }
         function showChartsData(datasets) {
+            showTotalData(datasets);
             const chartsContainer = document.getElementById('charts');
 
             Object.keys(datasets).forEach((key, index) => {
