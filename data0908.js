@@ -1,4 +1,4 @@
-﻿var data = {
+var data = {
   "coc_gift_pack": {
   },
   "coc_gift_pack_expired":{
@@ -169,7 +169,7 @@
   },
   "info":{
     "新裝備資訊":"info/新裝備資訊.html",
-    "9月平衡性更新":"info/9月更新.html"
+    "九月更新完整內容":"info/九月更新完整內容.html"
   }
 };
 
