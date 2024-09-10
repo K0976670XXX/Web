@@ -1,5 +1,12 @@
 var data = {
   "coc_gift_pack": {
+    "2024_免費寶箱":{
+          "time":"2024/09/10",
+          "url":"https://link.clashofclans.com/en/?action=voucher&code=0c2f8d2b-6cbe-42ae-a169-e172cd1ec4d6",
+          "code":"0c2f8d2b-6cbe-42ae-a169-e172cd1ec4d6",
+          "markdown":"免費的寶箱x5",
+          "img":[]
+    }
   },
   "coc_gift_pack_expired":{
     "2024_8月_動漫與部落":{
