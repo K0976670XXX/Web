@@ -1,5 +1,12 @@
 var data = {
   "coc_gift_pack": {
+    "2024_9約越月迷你聚光燈":{
+          "time":"2024/09/18",
+          "url":"https://link.clashofclans.com/en/?action=voucher&code=d3c7695b-682a-4d85-bf3d-50d479550961",
+          "code":"d3c7695b-682a-4d85-bf3d-50d479550961",
+          "markdown":"超級幣×100 和 冰塊×300",
+          "img":[]
+    },
     "2024_免費寶箱":{
           "time":"2024/09/10",
           "url":"https://link.clashofclans.com/en/?action=voucher&code=0c2f8d2b-6cbe-42ae-a169-e172cd1ec4d6",
