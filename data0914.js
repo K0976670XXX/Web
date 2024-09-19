@@ -1,5 +1,12 @@
-﻿var data = {
+var data = {
   "coc_gift_pack": {
+    "2024_免費寶箱_2":{
+          "time":"2024/09/19",
+          "url":"https://link.clashofclans.com/cnt/?action=voucher&code=53a84a01-ac52-4502-a7a0-0a0b70a7cd93",
+          "code":"53a84a01-ac52-4502-a7a0-0a0b70a7cd93",
+          "markdown":"免費的寶箱x3",
+          "img":[]
+    },
     "2024_9月迷你秀":{
           "time":"2024/09/18",
           "url":"https://link.clashofclans.com/en/?action=voucher&code=d3c7695b-682a-4d85-bf3d-50d479550961",
