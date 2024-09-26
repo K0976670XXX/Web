@@ -94,7 +94,7 @@
             showElement(true,'loading');
             postData(id);
         });
-        async function postData() {
+        async function postData(id) {
           const url = 'https://rfqdew9xda.execute-api.ap-northeast-1.amazonaws.com/DEFO/';
           const requestData = { 'id': id ,'apptype':'COC_Get_Info'};
 
