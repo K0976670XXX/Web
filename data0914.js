@@ -7,13 +7,6 @@ var data = {
           "markdown":"免費的寶箱x3",
           "img":[]
     },
-    "2024_9月迷你秀":{
-          "time":"2024/09/18",
-          "url":"https://link.clashofclans.com/en/?action=voucher&code=d3c7695b-682a-4d85-bf3d-50d479550961",
-          "code":"d3c7695b-682a-4d85-bf3d-50d479550961",
-          "markdown":"(img)[ice]x300 + (img)[Super_Medals]x100",
-          "img":['webp_img/ice.webp','webp_img/Super_Medals.webp']
-    },
     "2024_免費寶箱":{
           "time":"2024/09/10",
           "url":"https://link.clashofclans.com/en/?action=voucher&code=0c2f8d2b-6cbe-42ae-a169-e172cd1ec4d6",
@@ -23,13 +16,20 @@ var data = {
     }
   },
   "coc_gift_pack_expired":{
+    "2024_9月迷你秀":{
+          "time":"2024/09/18",
+          "url":"https://link.clashofclans.com/en/?action=voucher&code=d3c7695b-682a-4d85-bf3d-50d479550961",
+          "code":"d3c7695b-682a-4d85-bf3d-50d479550961",
+          "markdown":"(img)[ice]x300 + (img)[Super_Medals]x100",
+          "img":['webp_img/ice.webp','webp_img/Super_Medals.webp']
+    },
     "2024_8月_動漫與部落":{
           "time":"2024/08/09",
           "url":"https://link.clashofclans.com/cnt/?action=voucher&code=3d599d19-f313-4a2c-86db-013264bfdb5b",
           "code":"3d599d19-f313-4a2c-86db-013264bfdb5b",
           "markdown":"(img)[crystals]x150 + (img)[medals]x150",
           "img":['webp_img/crystals.webp','webp_img/medals.webp']
-      },
+    },
     "2024_7月_自然之戰":{
           "time":"2024/07/27",
           "url":"https://link.clashofclans.com/cnt/?action=voucher&code=a732966a-d7cb-46d6-b0e9-696fe919f1ae",
