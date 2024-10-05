@@ -6,7 +6,14 @@ body {
     margin: 0 auto;
     font-size: 18px; /* 默認字體大小 */
 }
-
+.build {
+    text-align: center;
+    padding: 20px;
+}
+.build img{
+    width: 30%;
+    height: auto;
+}
 li {
     padding: 5px;
 }
@@ -44,6 +51,8 @@ video {
     h3 {font-size: 20px; }
     h4 {font-size: 18px; }
     h5 {font-size: 16px; }
+    
+    .build img{width: 70%;height: auto;}
 }
 
 /* 針對平板設備調整樣式 */
