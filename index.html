@@ -22,10 +22,6 @@
     <script src="script.js"></script>
     <link rel="stylesheet" type="text/css" href="info/style.css">
     <style>
-        .build {
-            text-align: center;
-            padding: 20px;
-        }
         .clans_info img {
             width: 100%;
             height: auto;
@@ -58,9 +54,13 @@
         #coc_gift_pack_expired {
             display: none;
         }
+        #old_info {
+            display: none;
+        }
         #other-info {
             display: none;
-        } 
+        }
+        
     </style>
     
 </head>
@@ -93,7 +93,10 @@
     
     <h2 class="toggle-button" data-target="coc_gift_pack_expired"><span class="indicator">＋</span> 已過期禮包:</h2>
     <div class="coc_gift_pack_expired" id="coc_gift_pack_expired"></div>
-    
+    <hr>
+    <!-- 過期情報 -->
+    <h2 class="toggle-button" data-target="old_info"><span class="indicator">＋</span> 過期情報:</h2>
+    <div class="old_info" id="old_info"></div>
     <hr>
     
     <h2 class="toggle-button" data-target="other-info"><span class="indicator">＋</span> END:</h2>
@@ -104,7 +107,11 @@
         <img src="img/我家狗.jpg" loading="lazy">
     </div>
     
-    <div class="build">無聊的村庄 建置</div>
+    <div class="build">無聊的村庄 建置
+    <a href="https://www.buymeacoffee.com/luosproject">
+        <img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=luosproject&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff"/>
+    </a>
+    </div>
     
     <script>
         showData();
@@ -112,6 +119,7 @@
             document.getElementById("coc_gift_pack").innerHTML = generate_gift_pack(data,'');
             document.getElementById("coc_gift_pack_expired").innerHTML = generate_gift_pack(data,'expired');
             document.getElementById("info").innerHTML = generate_info(data);
+            document.getElementById("old_info").innerHTML = generate_old_info(data);
             document.getElementById("Useful_web").innerHTML = generate_Useful_web(data);
         }
         

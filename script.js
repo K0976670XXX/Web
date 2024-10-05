@@ -74,6 +74,25 @@ function generate_info(data){
     //document.getElementById("csvTable").innerHTML = inner_html;
     return inner_html
 }
+function generate_old_info(data){
+    let inner_html='';
+    var name = '';
+    var url = '';
+    //console.log(data.info);
+    var info_data = data.old_info;
+    var keys = Object.keys(info_data);
+    if (keys.length === 0){
+        inner_html = '<div>&emsp;當前無任何情報</div>'
+        return inner_html
+    }
+    for (var index in keys) {
+        name = keys[index];
+        url = info_data[name];
+        inner_html += `&emsp;<a href="${url}"><span>${name}</span></a><br><br>`; 
+    }
+    //document.getElementById("csvTable").innerHTML = inner_html;
+    return inner_html
+}
 function generate_Useful_web(data){
     let inner_html='';
     var name = '';
