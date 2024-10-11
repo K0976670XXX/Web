@@ -1,5 +1,12 @@
 ﻿var data = {
   "coc_gift_pack": {
+    "2024_10月mashup mania":{
+          "time":"2024/10/11",
+          "url":"https://link.clashofclans.com/cnt/?action=voucher&code=1e40f215-d230-4eab-ac6f-ba6fd909a813",
+          "code":"1e40f215-d230-4eab-ac6f-ba6fd909a813",
+          "markdown":"(img)[sour_Elixir]x300 + (img)[Mashup_Medals]x100",
+          "img":['webp_img/sour_Elixir.webp','webp_img/Mashup_Medals.webp']
+    }
   },
   "coc_gift_pack_expired":{
     "2024_免費寶箱_2":{
