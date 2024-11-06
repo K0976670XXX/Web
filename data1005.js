@@ -1,14 +1,14 @@
-﻿var data = {
+var data = {
   "coc_gift_pack": {
+  },
+  "coc_gift_pack_expired":{
     "2024_10月mashup mania":{
           "time":"2024/10/11",
           "url":"https://link.clashofclans.com/cnt/?action=voucher&code=1e40f215-d230-4eab-ac6f-ba6fd909a813",
           "code":"1e40f215-d230-4eab-ac6f-ba6fd909a813",
           "markdown":"(img)[sour_Elixir]x300 + (img)[Mashup_Medals]x100",
           "img":['webp_img/sour_Elixir.webp','webp_img/Mashup_Medals.webp']
-    }
-  },
-  "coc_gift_pack_expired":{
+    },
     "2024_免費寶箱_2":{
           "time":"2024/09/19",
           "url":"https://link.clashofclans.com/cnt/?action=voucher&code=53a84a01-ac52-4502-a7a0-0a0b70a7cd93",
@@ -188,6 +188,11 @@
         "img":"img/coc_Guide.jpg",
         "name":"Clash Of Clans Guide"
       },
+    "聯賽表現分析":{
+      "url":"https://www.clashcalc.com/",
+      "img":"img/clashcalc.webp",
+      "name":"clashcalc"
+    },
     "部落衝突API":{
         "url":"https://developer.clashofclans.com/#/documentation",
         "img":"",
