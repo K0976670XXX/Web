@@ -1,5 +1,26 @@
 var data = {
   "coc_gift_pack": {
+    "2024_11免費寶箱_3":{
+          "time":"2024/11/08",
+          "url":"https://link.clashofclans.com/en/?action=voucher&code=11219890-f0a7-4ea5-98b6-443a964ba586",
+          "code":"11219890-f0a7-4ea5-98b6-443a964ba586",
+          "markdown":"免費的寶箱x1",
+          "img":[]
+    },
+    "2024_11免費寶箱_2":{
+          "time":"2024/11/08",
+          "url":"https://link.clashofclans.com/?action=voucher&code=7cb7efb7-90db-4c1b-850f-51009d33e432",
+          "code":"7cb7efb7-90db-4c1b-850f-51009d33e432",
+          "markdown":"免費的寶箱x1",
+          "img":[]
+    },
+    "2024_11免費寶箱_1":{
+          "time":"2024/11/08",
+          "url":"https://link.clashofclans.com/?action=voucher&code=53cac1a1-0186-47fa-b004-120be2da8faf",
+          "code":"53cac1a1-0186-47fa-b004-120be2da8faf",
+          "markdown":"免費的寶箱x1",
+          "img":[]
+    }
   },
   "coc_gift_pack_expired":{
     "2024_10月mashup mania":{
