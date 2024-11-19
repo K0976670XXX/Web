@@ -250,6 +250,8 @@
       "legendary" :{8:12,9:12,10:15,11:15,12:18,13:18,14:21,15:24,16:27},
       "normal"    :{8:9 ,9:9 ,10:12,11:12,12:15,13:15,14:18,15:18,16:18}
     };
+    const legendary_max_lv = 27;
+    const normal_max_lv = 18;
     // 裝備升級所需礦石量
     equipment_mine_num = {
       'blue_mine'   : [
@@ -317,7 +319,7 @@
         '泰坦III' : { 'blue': 775,  'purple': 42 },
         '泰坦II'  : { 'blue': 850,  'purple': 46 },
         '泰坦I'   : { 'blue': 925,  'purple': 50 },
-        '傳說'    : { 'blue': 1000, 'purple': 54 }
+        '傳奇'    : { 'blue': 1000, 'purple': 54 }
     };
     //判斷是否為史詩裝備
     const regex = /legendary/;
@@ -422,13 +424,15 @@
     function updateMinerals() {
         const rows = document.querySelectorAll('#mine tbody tr');
         rows.forEach(row => {
+            const equip_type = proc_legendary(row.querySelector('.target-level').name);
             const currentLevel = parseInt(row.querySelector('.current-level').value) || 0;
             const targetLevel = parseInt(row.querySelector('.target-level').value) || 0;
             const blueMineral = row.querySelector('.blue-mineral');
             const purpleMineral = row.querySelector('.purple-mineral');
             const yellowMineral = row.querySelector('.yellow-mineral');
             // 當設定異常時
-            if (currentLevel==0 || targetLevel==0 || currentLevel>targetLevel){
+            if (currentLevel==0 || targetLevel==0 || currentLevel>targetLevel||
+                (equip_type==='normal' && targetLevel>normal_max_lv)||targetLevel>legendary_max_lv){
               blueMineral.textContent = 0;
               purpleMineral.textContent = 0;
               yellowMineral.textContent = 0;
@@ -437,7 +441,8 @@
             var left_mine = calculate_Minerals(currentLevel,targetLevel);
             blueMineral.textContent = left_mine.blue;
             purpleMineral.textContent = left_mine.purple;
-            yellowMineral.textContent = left_mine.yellow;
+            if (equip_type==='normal'){yellowMineral.textContent = 0;}
+            if (equip_type==='legendary'){yellowMineral.textContent = left_mine.yellow;}
         });
     }
     // 計算剩餘礦石
@@ -551,7 +556,7 @@
             { 'league': '泰坦III' , 'blue': 0.0, 'purple': 0.0 },
             { 'league': '泰坦II'  , 'blue': 0.0, 'purple': 0.0 },
             { 'league': '泰坦I'   , 'blue': 0.0, 'purple': 0.0 },
-            { 'league': '傳說'    , 'blue': 0.0, 'purple': 0.0 }
+            { 'league': '傳奇'    , 'blue': 0.0, 'purple': 0.0 }
         ];
         // 獲取商店可獲得礦石
         var daily_mine_store = calculate_avg_daily_mine_from_store()
@@ -788,7 +793,7 @@
             { 'league': '泰坦III' , 'blue': 0.0, 'purple': 0.0 ,'yellow': 0.0 },
             { 'league': '泰坦II'  , 'blue': 0.0, 'purple': 0.0 ,'yellow': 0.0 },
             { 'league': '泰坦I'   , 'blue': 0.0, 'purple': 0.0 ,'yellow': 0.0 },
-            { 'league': '傳說'    , 'blue': 0.0, 'purple': 0.0 ,'yellow': 0.0 }
+            { 'league': '傳奇'    , 'blue': 0.0, 'purple': 0.0 ,'yellow': 0.0 }
         ];
         // 獲取商店可獲得礦石
         var daily_mine_store = calculate_avg_daily_mine_from_store();
