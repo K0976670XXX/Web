@@ -19,14 +19,19 @@
     <script src="https://web-b7a.pages.dev/lab/html_tool/countdown.js"></script>
     
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7343628224568601" crossorigin="anonymous"></script>
-
+    <style>
+      img.small {
+        height: 200px;
+        width: auto;
+      }
+    </style>
 </head>
 
 <body>
 	<h1>工研院_手套外骨骼</h1><hr><hr>
     
     <h2>資訊:</h2>
-    <p>截止日期:2024-11-30<br />
+    <p>截止日期:2024-12-30<br />
     <div id="countdown">剩餘: 0天 0小時 0分 0秒</div>
     <hr><hr>
     <h2>備忘:</h2>
@@ -36,6 +41,30 @@
     <hr><hr>
     <!-- ================進度================= -->
     <h2>進度:</h2>
+    <h3>進行實驗:</h3>
+    <p>利用Artise (32ch)進行實驗，在與柏翰學長學了Artise腦波帽的使用、安裝及清理後，以手臂的版本去進行實驗。<br />
+    <img class="small" src="data/img/2024_11_22.jpg" loading="lazy">
+    <h4>實驗過程中遇到的問題:</h4>
+    <ul>
+        <li>1.腦波帽帶完，進行訓練後，阻抗常常直接跳回到2000多:<br>
+            不太確定是不是我們帶腦波帽的過程是否有問題，前半部不會有問題，但後半部的電極經常有問題。<br>
+            在配戴時，後半部也確實有點鬆鬆的，不太清楚該如何解決<br>
+        </li>
+        <li>2.訊號經常顯示late:<br>
+            在實驗過程中，觀察並沒有太慢動作的現象，不太確定為什麼會這樣<br>
+            <b>再回過頭去看程式部分，單純是因為分類錯誤.....</b>
+        </li>
+        <li>3.偶爾出現 noisy:<br>
+            在實驗過程中，偶爾會判斷成 noisy，原本以為是程式有寫錯，但後來發現腦波帽阻抗較穩定時，判斷成 noisy的情況有明顯減少。
+        </li>
+        <li>4.準確率堪憂:<br>
+            在實驗過程中，模型經常有明明應該有在正確動作的，但卻判斷為沒在動，可能單純是試驗次數過低(20次試驗)，模型訓練不夠充分。
+        </li>
+        <li>5.程式上的bug:<br>
+            雖然第一次實驗效果感覺不太好，且程式上也發現有幾處bug，但都快速解決了。
+        </li>
+    </ul>
+    <hr>
     <h3>2.嘗試改成手部:</h3>
     <p>由於手部相對於手臂、腿部的版本，其動作更多，還要考慮後續方便加入動作，花了點時間。<br>也順便調整提示語音，稍微提高語速<br />
     <a href="data/code/hand.html">手部版</a>
@@ -123,7 +152,7 @@
     
     <script>
         // 初始化倒數計時
-        initCountdown("2024-11-29T23:59:59");
+        initCountdown("2024-12-29T23:59:59");
     </script>
 </body>
 
