@@ -70,6 +70,9 @@
         #tableContainer_RC {
             display: none;
         }
+        #tableContainer_MP {
+            display: none;
+        }
         #starRewardTable {
             display: none;
         }
@@ -146,6 +149,8 @@
         <div id="tableContainer_GW"></div><br>
         <h3 class="toggle-button" data-target="tableContainer_RC"><span class="indicator">＋</span> 神盾勇者</h3>
         <div id="tableContainer_RC"></div><br>
+        <h3 class="toggle-button" data-target="tableContainer_MP"><span class="indicator">＋</span> 亡靈王子</h3>
+        <div id="tableContainer_MP"></div><br>
     </form>
 
     <div id="messageArea">
@@ -191,11 +196,17 @@
     &emsp;4.<a href="https://clashpost.com/upgrade/category/home">
 				<span>部落驿站:裝備資訊 </span>
 		</a><br>
+    &emsp;5.<a href="https://x.com/ClashDotNinja/status/1860670103471231314">
+				<span>Nov 2024 Sneak Peek 3: Henchmen Puppet </span>
+		</a><br>
+    &emsp;6.<a href="https://x.com/ClashDotNinja/status/1860670029760430259">
+				<span>Nov 2024 Sneak Peek 3: Dark Orb </span>
+		</a><br>
     <hr>
     <h2>未來計畫</h2>
     <span>&emsp;<del>考慮勝利之星加倍 : 輸入倍率、活動天數</del></span><br>
     <span>&emsp;<del>考慮商店 : 勾選用突襲幣買那些礦石、用寶石買哪些礦石</del></span><br>
-    <span>&emsp;最後更新時間:2024/08/10</span><br>
+    <span>&emsp;最後更新時間:2024/11/24</span><br>
     
     
     
@@ -244,11 +255,16 @@
         {'name': '極速藥水瓶', 'type': 'normal'},
         {'name': '火箭長矛', 'type': 'legendary'}
     ];
+    //亡靈王子裝備
+    const equipmentList_MP = [
+        {'name': '護衛玩偶', 'type': 'normal'},
+        {'name': '暗黑魔球', 'type': 'normal'}
+    ];
     const min_lv_eq = 8;  //解鎖裝備的最低等級
-    const max_lv_eq = 16; //解鎖裝備的最高等級
+    const max_lv_eq = 17; //解鎖裝備的最高等級
     const equipment_lv_max = {
-      "legendary" :{8:12,9:12,10:15,11:15,12:18,13:18,14:21,15:24,16:27},
-      "normal"    :{8:9 ,9:9 ,10:12,11:12,12:15,13:15,14:18,15:18,16:18}
+      "legendary" :{8:12,9:12,10:15,11:15,12:18,13:18,14:21,15:24,16:27,17:27},
+      "normal"    :{8:9 ,9:9 ,10:12,11:12,12:15,13:15,14:18,15:18,16:18,17:27}
     };
     const legendary_max_lv = 27;
     const normal_max_lv = 18;
@@ -848,6 +864,7 @@
     createTable(equipmentList_AQ,'tableContainer_AQ');
     createTable(equipmentList_GW,'tableContainer_GW');
     createTable(equipmentList_RC,'tableContainer_RC');
+    createTable(equipmentList_MP,'tableContainer_MP');
     
     createTable_starReward_nonCW();
     create_CW_Table()
