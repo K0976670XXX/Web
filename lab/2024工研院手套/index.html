@@ -24,6 +24,11 @@
         height: 200px;
         width: auto;
       }
+      #h3_0 {display: none;} 
+      #h3_1 {display: none;} 
+      #h3_2 {display: none;} 
+      #h3_3 {display: none;} 
+      #h3_4 {display: block;} 
     </style>
 </head>
 
@@ -41,118 +46,184 @@
     <hr><hr>
     <!-- ================進度================= -->
     <h2>進度:</h2>
-    <h3>進行實驗:</h3>
-    <p>利用Artise (32ch)進行實驗，在與柏翰學長學了Artise腦波帽的使用、安裝及清理後，以手臂的版本去進行實驗。<br />
-    <img class="small" src="data/img/2024_11_22.jpg" loading="lazy">
-    <h4>實驗過程中遇到的問題:</h4>
-    <ul>
-        <li>1.腦波帽帶完，進行訓練後，阻抗常常直接跳回到2000多:<br>
-            不太確定是不是我們帶腦波帽的過程是否有問題，前半部不會有問題，但後半部的電極經常有問題。<br>
-            在配戴時，後半部也確實有點鬆鬆的，不太清楚該如何解決<br>
-        </li>
-        <li>2.訊號經常顯示late:<br>
-            在實驗過程中，觀察並沒有太慢動作的現象，不太確定為什麼會這樣<br>
-            <b>再回過頭去看程式部分，單純是因為分類錯誤.....</b>
-        </li>
-        <li>3.偶爾出現 noisy:<br>
-            在實驗過程中，偶爾會判斷成 noisy，原本以為是程式有寫錯，但後來發現腦波帽阻抗較穩定時，判斷成 noisy的情況有明顯減少。
-        </li>
-        <li>4.準確率堪憂:<br>
-            在實驗過程中，模型經常有明明應該有在正確動作的，但卻判斷為沒在動，可能單純是試驗次數過低(20次試驗)，模型訓練不夠充分。
-        </li>
-        <li>5.程式上的bug:<br>
-            雖然第一次實驗效果感覺不太好，且程式上也發現有幾處bug，但都快速解決了。
-        </li>
-    </ul>
-    <hr>
-    <h3>2.嘗試改成手部:</h3>
-    <p>由於手部相對於手臂、腿部的版本，其動作更多，還要考慮後續方便加入動作，花了點時間。<br>也順便調整提示語音，稍微提高語速<br />
-    <a href="data/code/hand.html">手部版</a>
-    <img src="data/img/hand_action.jpg" loading="lazy">
-    <h4>動作補充說明:</h4>
-    <ul>
-        <li>Train 收集資料過程:<br>
-            分為:左手握拳、右手握拳、左手張開手掌、右手張開手掌、維持放鬆。<br>
-            在握拳或張開手掌的動作完成後，<b>受試者需恢復放鬆狀態，手自然放鬆微張。</b><br>
-            1個fixation_cue會顯示1秒，1個動作的cue會顯示2秒，顯示分數1秒，空白畫面1秒，<b>一次完整的trials約5秒多。</b><br>
-            <a href="data/video/demo_train_hand.mp4">demo影片</a>
-            </li>
-        <li>Train 訓練模型過程:<br>
-            基本上和洛凡學長的一樣，將資料分割成左側和右側，並分別訓練，訓練出2組獨立model。<br>
-            左側model:用來區分，左手握拳、左手張開手掌、放鬆<br>
-            右側model:用來區分，右手握拳、右手張開手掌、放鬆<br>
-            每一組(左側或右側)包含3個model:PSD、PCC、CSP<br></li>
-        <li>Test:<br>
-            使用者可以選擇手套 裝置在左手還是右手，後續實驗也會以那隻手為主。<br>
-            當選擇左手時，畫面會顯示左手握拳、左手張開手掌、放鬆的cue<br>
-            當選擇右腳時，畫面會顯示右手握拳、右手張開手掌、放鬆的cue<br>
-            3個提示會進行隨機打亂<br>
-            由於紀錄的當下手套還未到，因此此時的實驗將分類結果以cmd視窗呈現<br>
-            <img src="data/img/ctrl_gloves.jpg" loading="lazy">
-            </li>
-    </ul>
-    <h4>疑惑點:</h4>
-    <ul>
-        <li>1.是否要把resting改掉，改成在training過程中接續在每個動作的後面這樣，test過程就直接不要resting了<br>
-            <b>手臂和腿部時，resting感覺不太好改掉，但手套有較多動作，改掉應該是絕對可以，改這部分很快，之後再與教授討論看看。</b></li>
-        <li>2.由於記錄的當下，還沒進行過實驗，沒有數據去確認在training modele過程是否能正常運行?<br>
-            因為原本的手臂和腿部都屬於2元分類器，只要判斷動和沒動就好，改成手部直接變成多類別分類，不確定分類效果是否能用...<br></li>
-    </ul>
     
-    <hr>
-    <h3>1.嘗試改成手臂:</h3>
-    <p>由於前面做的改寫，基本上這裡很快就解決了。<br>改個圖片和把原本先伸直在彎曲(腿部)改成先彎曲在伸直(手臂)<br />
-    <a href="data/code/arm.html">手臂版</a>
-    <img src="data/img/arm_action.jpg" loading="lazy">
-    <p>在製作完圖片後，與文楊討論，發現圖片好像不是很直覺，可能導致經常動錯手<br>因此透過google 翻譯的語音包，生成出三個動作的語音去輔助<br />
-    <a href="data/video/demo_train_arm.mp4">demo影片</a>
-    <h4>疑惑點:</h4>
-    <ul>
-        <li>1.是否要把resting改掉，改成在training過程中接續在每個動作的後面這樣，test過程就直接不要resting了<br></li>
-        <li>2.語音提示會不會出現太慢?<br>
-              是否會影響受試者的訓練效果?是否該提高語速?<br>
-              或直接在畫面出現前就開始播放<br></li>
-        <li>3.有什麼更直覺一點的方式呈現畫面嗎?<br></li>
-        <li>4.先彎曲在伸直是否合適?會這樣定義是因為resting狀態設定為手臂伸直<br></li>
-    </ul>
-    
-    <hr>
-    <h3>0.嘗試解讀洛凡學長的程式:</h3>
-    <a href="data/code/BCI KneeBO System.html">學長的程式</a>
-    <p>由於學長的版本在詳細檢視後，發現其在擴充性方面存在限制，考慮到未來手套可能需要頻繁新增動作或更換圖示，我花了一段時間進行改寫。在保留原有功能和演算法的基礎上，僅對程式架構進行調整，以提升其擴充性和維護性。<br />
-    <a href="data/code/myself2.html">改寫後的</a>
-    <h4>動作方式:</h4>
-    <ul>
-        <li>Train 收集資料過程:<br>
-            訓練內容分為:左腳動、右腳動、resting。<br>
-            3個動作會進行隨機打亂，避免讓受試者習慣動作，導致腦波的變化會越來越不顯著。<br>
-            1個fixation_cue會顯示1秒，1個動作的cue會顯示2秒，顯示分數1秒，空白畫面1秒，一次完整的trials約5秒多。<br>
-            <a href="data/video/demo_train.mp4">demo影片</a>
+    <h3 class="toggle-button" data-target="h3_4">
+        <span class="indicator">＋</span> 改進前面的問題後，再次進行實驗:
+    </h3>
+    <div id="h3_4" style="display: block;">
+        <p>同樣利用Artise (32ch)進行實驗<br />
+        <h4>改進點:</h4>
+        <ul>
+            <li>1.之前腦波帽用了一段時間後，阻抗跳到2000多的問題:<br>
+            據觀察後發現，可能是因為上次戴的時候，戴的有點太後面，在將腦波帽往前調後，並且戴完後嘗試是晃動確認是否穩定配戴，阻抗就相當穩定了<br>
             </li>
-        <li>Train 訓練模型過程:<br>
-            前處理會將資料依據event marker做分割，會將資料分割成左側和右側，並分別訓練，訓練出2組獨立model。<br>
-            左側model:用來區分，左腳動、resting<br>
-            右側model:用來區分，右腳動、resting<br>
-            每一組(左側或右側)包含3個model:PSD、PCC、CSP<br></li>
-        <li>Test:<br>
-            使用者可以選擇Kneebo 裝置在左腳還是右腳，後續實驗也會以那隻腳為主。<br>
-            當選擇左腳時，畫面會顯示動左腳和resting的cue<br>
-            當選擇右腳時，畫面會顯示動右腳和resting的cue<br>
-            2個動作會進行隨機打亂<br>
-            1個fixation_cue會顯示1秒，1個動作的cue會顯示2秒，送出指令給kneebo後會暫停5秒，顯示分數1秒，空白畫面1秒，<b>一次完整的trials約10秒多。</b><br></li>
-    </ul>
-    <h4>疑惑點:</h4>
-    <ul>
-        <li>1.為何要設計成，連resting都隨機一起打亂?不怕隨機下去，連續3、4個resting嗎?<br></li>
-        <li>2.為何要把伸直彎曲合併成一個動作?為什麼不設計成彎曲一個動作、伸直一個動作?從程式來看是有辦法做的<br></li>
-        <img src="data/img/Kneebo伸直彎曲.jpg" loading="lazy">
-        <p><b>回答2.因為腳舉著十幾秒，很累!</b></p>
-    </ul>
+            <li>2.程式上的優化:<br>
+                原先在訓練、測試模型時需要按一堆東西，操作上相當麻煩，針對這個部分簡單的進行改進。<br>
+                並且原先沒辦法看到進度，無法判斷還剩多久，簡單的把他給加了上去。
+            </li>
+        </ul>
+        <h4>實驗過程中遇到的問題:</h4>
+        <ul>
+            <li>1.訓練過程的時間過久:<br>
+            光是手臂的訓練過程，進行90次實驗，就需要<br>
+            3(提示種類)×5(一次提示所需時間)×90次實驗=22.5分鐘。<br>
+            若以手(5種提示)的去進行，就變成37.5分鐘。
+            <br>
+            </li>
+            <li>2.實驗過程受試者可能犯困:<br>
+            受試者表示:時間很久，看著畫面又很無聊，加上聲音太過平緩，有點催眠。<br>
+            考慮是否在訓練過程加上一些能拉回受試者專注力的東西?<br>
+            <br>
+            </li>
+        </ul>
+    </div>
+    <hr>
     
+    <h3 class="toggle-button" data-target="h3_3">
+        <span class="indicator">＋</span> 初次進行實驗:
+    </h3>
+    <div id="h3_3">
+        <p>利用Artise (32ch)進行實驗，在與柏翰學長學了Artise腦波帽的使用、安裝及清理後，以手臂的版本去進行實驗。<br />
+        <img class="small" src="data/img/2024_11_22.jpg" loading="lazy">
+        <h4>實驗過程中遇到的問題:</h4>
+        <ul>
+            <li>1.腦波帽帶完，進行訓練後，阻抗常常直接跳回到2000多:<br>
+                不太確定是不是我們帶腦波帽的過程是否有問題，前半部不會有問題，但後半部的電極經常有問題。<br>
+                在配戴時，後半部也確實有點鬆鬆的，不太清楚該如何解決<br>
+            </li>
+            <li>2.訊號經常顯示late:<br>
+                在實驗過程中，觀察並沒有太慢動作的現象，不太確定為什麼會這樣<br>
+                <b>再回過頭去看程式部分，單純是因為分類錯誤.....</b>
+            </li>
+            <li>3.偶爾出現 noisy:<br>
+                在實驗過程中，偶爾會判斷成 noisy，原本以為是程式有寫錯，但後來發現腦波帽阻抗較穩定時，判斷成 noisy的情況有明顯減少。
+            </li>
+            <li>4.準確率堪憂:<br>
+                在實驗過程中，模型經常有明明應該有在正確動作的，但卻判斷為沒在動，可能單純是試驗次數過低(20次試驗)，模型訓練不夠充分。
+            </li>
+            <li>5.程式上的bug:<br>
+                雖然第一次實驗效果感覺不太好，且程式上也發現有幾處bug，但都快速解決了。
+            </li>
+        </ul>
+    </div>
+    <hr>
+    
+    <h3 class="toggle-button" data-target="h3_2">
+        <span class="indicator">＋</span> 2.嘗試改成手部:
+    </h3>
+    <div id="h3_2">
+        <p>由於手部相對於手臂、腿部的版本，其動作更多，還要考慮後續方便加入動作，花了點時間。<br>也順便調整提示語音，稍微提高語速<br />
+        <a href="data/code/hand.html">手部版</a>
+        <img src="data/img/hand_action.jpg" loading="lazy">
+        <h4>動作補充說明:</h4>
+        <ul>
+            <li>Train 收集資料過程:<br>
+                分為:左手握拳、右手握拳、左手張開手掌、右手張開手掌、維持放鬆。<br>
+                在握拳或張開手掌的動作完成後，<b>受試者需恢復放鬆狀態，手自然放鬆微張。</b><br>
+                1個fixation_cue會顯示1秒，1個動作的cue會顯示2秒，顯示分數1秒，空白畫面1秒，<b>一次完整的trials約5秒多。</b><br>
+                <a href="data/video/demo_train_hand.mp4">demo影片</a>
+                </li>
+            <li>Train 訓練模型過程:<br>
+                基本上和洛凡學長的一樣，將資料分割成左側和右側，並分別訓練，訓練出2組獨立model。<br>
+                左側model:用來區分，左手握拳、左手張開手掌、放鬆<br>
+                右側model:用來區分，右手握拳、右手張開手掌、放鬆<br>
+                每一組(左側或右側)包含3個model:PSD、PCC、CSP<br></li>
+            <li>Test:<br>
+                使用者可以選擇手套 裝置在左手還是右手，後續實驗也會以那隻手為主。<br>
+                當選擇左手時，畫面會顯示左手握拳、左手張開手掌、放鬆的cue<br>
+                當選擇右腳時，畫面會顯示右手握拳、右手張開手掌、放鬆的cue<br>
+                3個提示會進行隨機打亂<br>
+                由於紀錄的當下手套還未到，因此此時的實驗將分類結果以cmd視窗呈現<br>
+                <img src="data/img/ctrl_gloves.jpg" loading="lazy">
+                </li>
+        </ul>
+        <h4>疑惑點:</h4>
+        <ul>
+            <li>1.是否要把resting改掉，改成在training過程中接續在每個動作的後面這樣，test過程就直接不要resting了<br>
+                <b>手臂和腿部時，resting感覺不太好改掉，但手套有較多動作，改掉應該是絕對可以，改這部分很快，之後再與教授討論看看。</b></li>
+            <li>2.由於記錄的當下，還沒進行過實驗，沒有數據去確認在training modele過程是否能正常運行?<br>
+                因為原本的手臂和腿部都屬於2元分類器，只要判斷動和沒動就好，改成手部直接變成多類別分類，不確定分類效果是否能用...<br></li>
+        </ul>
+    </div>
+    <hr>
+    
+    <h3 class="toggle-button" data-target="h3_1">
+        <span class="indicator">＋</span> 1.嘗試改成手臂:
+    </h3>
+    <div id="h3_1">
+        <p>由於前面做的改寫，基本上這裡很快就解決了。<br>改個圖片和把原本先伸直在彎曲(腿部)改成先彎曲在伸直(手臂)<br />
+        <a href="data/code/arm.html">手臂版</a>
+        <img src="data/img/arm_action.jpg" loading="lazy">
+        <p>在製作完圖片後，與文楊討論，發現圖片好像不是很直覺，可能導致經常動錯手<br>因此透過google 翻譯的語音包，生成出三個動作的語音去輔助<br />
+        <a href="data/video/demo_train_arm.mp4">demo影片</a>
+        <h4>疑惑點:</h4>
+        <ul>
+            <li>1.是否要把resting改掉，改成在training過程中接續在每個動作的後面這樣，test過程就直接不要resting了<br></li>
+            <li>2.語音提示會不會出現太慢?<br>
+                  是否會影響受試者的訓練效果?是否該提高語速?<br>
+                  或直接在畫面出現前就開始播放<br></li>
+            <li>3.有什麼更直覺一點的方式呈現畫面嗎?<br></li>
+            <li>4.先彎曲在伸直是否合適?會這樣定義是因為resting狀態設定為手臂伸直<br></li>
+        </ul>
+    </div>
+    <hr>
+    
+    <h3 class="toggle-button" data-target="h3_0">
+        <span class="indicator">＋</span> 0.嘗試解讀洛凡學長的程式:
+    </h3>
+    <div id="h3_0">
+        <a href="data/code/BCI KneeBO System.html">學長的程式</a>
+        <p>由於學長的版本在詳細檢視後，發現其在擴充性方面存在限制，考慮到未來手套可能需要頻繁新增動作或更換圖示，我花了一段時間進行改寫。在保留原有功能和演算法的基礎上，僅對程式架構進行調整，以提升其擴充性和維護性。<br />
+        <a href="data/code/myself2.html">改寫後的</a>
+        <h4>動作方式:</h4>
+        <ul>
+            <li>Train 收集資料過程:<br>
+                訓練內容分為:左腳動、右腳動、resting。<br>
+                3個動作會進行隨機打亂，避免讓受試者習慣動作，導致腦波的變化會越來越不顯著。<br>
+                1個fixation_cue會顯示1秒，1個動作的cue會顯示2秒，顯示分數1秒，空白畫面1秒，一次完整的trials約5秒多。<br>
+                <a href="data/video/demo_train.mp4">demo影片</a>
+                </li>
+            <li>Train 訓練模型過程:<br>
+                前處理會將資料依據event marker做分割，會將資料分割成左側和右側，並分別訓練，訓練出2組獨立model。<br>
+                左側model:用來區分，左腳動、resting<br>
+                右側model:用來區分，右腳動、resting<br>
+                每一組(左側或右側)包含3個model:PSD、PCC、CSP<br></li>
+            <li>Test:<br>
+                使用者可以選擇Kneebo 裝置在左腳還是右腳，後續實驗也會以那隻腳為主。<br>
+                當選擇左腳時，畫面會顯示動左腳和resting的cue<br>
+                當選擇右腳時，畫面會顯示動右腳和resting的cue<br>
+                2個動作會進行隨機打亂<br>
+                1個fixation_cue會顯示1秒，1個動作的cue會顯示2秒，送出指令給kneebo後會暫停5秒，顯示分數1秒，空白畫面1秒，<b>一次完整的trials約10秒多。</b><br></li>
+        </ul>
+        <h4>疑惑點:</h4>
+        <ul>
+            <li>1.為何要設計成，連resting都隨機一起打亂?不怕隨機下去，連續3、4個resting嗎?<br></li>
+            <li>2.為何要把伸直彎曲合併成一個動作?為什麼不設計成彎曲一個動作、伸直一個動作?從程式來看是有辦法做的<br></li>
+            <img src="data/img/Kneebo伸直彎曲.jpg" loading="lazy">
+            <p><b>回答2.因為腳舉著十幾秒，很累!</b></p>
+        </ul>
+    </div>
+    
+    <br><br><br>
     
     <script>
         // 初始化倒數計時
         initCountdown("2024-12-29T23:59:59");
+        // 控制表格是否隱形
+        document.querySelectorAll('.toggle-button').forEach(button => {
+            button.addEventListener('click', function() {
+                var targetId = this.getAttribute('data-target');
+                var tableContainer = document.getElementById(targetId);
+                var indicator = this.querySelector('.indicator');
+                if (tableContainer.style.display === "none" || tableContainer.style.display === "") {
+                    tableContainer.style.display = "block";
+                    indicator.textContent = "－";
+                } else {
+                    tableContainer.style.display = "none";
+                    indicator.textContent = "＋";
+                }
+            });
+        });
     </script>
 </body>
 
