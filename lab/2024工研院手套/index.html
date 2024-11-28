@@ -206,27 +206,25 @@
     
     <br><br><br>
     
-    <script>
-        // 初始化倒數計時
-        initCountdown("2024-12-29T23:59:59");
-        // 控制表格是否隱形
-        document.querySelectorAll('.toggle-button').forEach(button => {
-            button.addEventListener('click', function() {
-                var targetId = this.getAttribute('data-target');
-                var tableContainer = document.getElementById(targetId);
-                var indicator = this.querySelector('.indicator');
-                if (tableContainer.style.display === "none" || tableContainer.style.display === "") {
-                    tableContainer.style.display = "block";
-                    indicator.textContent = "－";
-                } else {
-                    tableContainer.style.display = "none";
-                    indicator.textContent = "＋";
-                }
-            });
-        });
-    </script>
 </body>
-
-
+<script>
+    // 初始化倒數計時
+    initCountdown("2024-12-29T23:59:59","countdown");
+    // 控制表格是否隱形
+    document.querySelectorAll('.toggle-button').forEach(button => {
+        button.addEventListener('click', function() {
+            var targetId = this.getAttribute('data-target');
+            var tableContainer = document.getElementById(targetId);
+            var indicator = this.querySelector('.indicator');
+            if (tableContainer.style.display === "none" || tableContainer.style.display === "") {
+                tableContainer.style.display = "block";
+                indicator.textContent = "－";
+            } else {
+                tableContainer.style.display = "none";
+                indicator.textContent = "＋";
+            }
+        });
+    });
+</script>
 
 </html>
