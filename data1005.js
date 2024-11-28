@@ -124,11 +124,6 @@ var data = {
   },
   
   "useful_web":{
-    "查看玩家科技資訊(無聊的村庄建置)":{
-        "url":"tool/COC_Get_Info.html",
-        "img":"",
-        "name":"查看玩家科技資訊"
-      },
     "礦石計算機(無聊的村庄建置)":{
         "url":"tool/礦石計算機.html",
         "img":"",
