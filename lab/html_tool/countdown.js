@@ -1,11 +1,11 @@
-function initCountdown(targetDateStr) {
+function initCountdown(targetDateStr,countdown_id) {
     const targetDate = new Date(targetDateStr);
 
     function updateCountdown() {
         const now = new Date();
         const timeDiff = targetDate - now;
 
-        const countdownElement = document.getElementById("countdown");
+        const countdownElement = document.getElementById(countdown_id);
         if (!countdownElement) {
             console.error("Countdown element not found!");
             return;
