@@ -3,24 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 Error</title>
+    <link rel="stylesheet" type="text/css" href="html_tool/style.css">
+    <link rel="stylesheet" href="html_tool/countdown.css">
+    <script src="html_tool/countdown.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7343628224568601" crossorigin="anonymous"></script>
+    <title>首頁</title>
     <style>
-        .centered-image {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+        /* 容器 */
+        .container {
+            max-width: 800px;
+            width: 100%;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
-        .centered-image img {
-            max-width: 100%;
-            max-height: 100%;
+
+        /* 連結列表 */
+        .link-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .link-list li {
+            margin: 10px 0;
+        }
+        /* 按鈕樣式 */
+        .link-list a {
+            text-decoration: none;
+            display: block;
+            padding: 15px;
+            background: #3498db;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+<!--         .link-list a:hover {
+            background: #2980b9;
+        } -->
+
+        /* 說明樣式 */
+        .description {
+            margin-top: 5px;
         }
     </style>
 </head>
 <body>
-    <div class="centered-image">
-        <img src="https://httpstatusdogs.com/img/404.jpg" alt="404 Error">
+    <div class="container">
+        <h1>Neural Engineering Lab</h1>
+        <ul class="link-list">
+            <li>
+                <a href="2024工研院手套/index.html" style="color: white;">2024年工研院計畫_手套外骨骼</a>
+                <p class="description">
+                <b>2024年工研院計畫_手套外骨骼</b><br>
+                截止日期:2024-12-30<br />
+                <div id="countdown_01">剩餘: 0天 0小時 0分 0秒</div>
+                紀錄計畫過程中的進度、改進內容、問題及想法。
+                </p>
+            </li>
+            <li>
+                <a href="page2.html" style="color: white;">暫留</a>
+                <p class="description">...</p>
+            </li>
+            <!--<li>
+                <a href="page3.html">前往頁面三</a>
+                <p class="description">頁面三是專為進階用戶設計。</p>
+            </li> -->
+        </ul>
     </div>
 </body>
+<script>
+    // 初始化倒數計時
+    initCountdown("2024-12-29T23:59:59","countdown_01");
+</script>
 </html>
-
