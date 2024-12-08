@@ -28,7 +28,8 @@
       #h3_1 {display: none;} 
       #h3_2 {display: none;} 
       #h3_3 {display: none;} 
-      #h3_4 {display: block;} 
+      #h3_4 {display: none;} 
+      #h3_5 {display: block;} 
     </style>
 </head>
 
@@ -46,11 +47,38 @@
     <hr><hr>
     <!-- ================進度================= -->
     <h2>進度:</h2>
+    <h3 class="toggle-button" data-target="h3_5">
+        <span class="indicator">＋</span> 針對前面實驗發生的問題，進行討論，決定最終實驗流程
+    </h3>
+    <div id="h3_5" style="display: block;">
+        <p>根據前面幾次的實驗，觀察到幾個問題:<br />
+        <ul>
+            <li>1.時間拉長時，受試者會由於無聊犯困:<br></li>
+            <li>2.在少量實驗次數時，準確率有時況很高有時很低:<br></li>
+            <li>3.判斷錯誤大部分出現在resting階段:<br></li>
+        </ul>
+        <h4>改進點:</h4>
+        <ul>
+            <li>1.受試者無聊犯困:<br>
+            這個部分嘗試增加使受試者定期休息等待他們回復精神，由於無法確保受試者何時能回復，因此採用按鍵控制的方式，並且不提供提前結束訓練的按鈕，強制做完才能結束，確保完整做完訓練。<br>
+            </li>
+            <li>2.嘗試找出最佳的實驗次數:<br>
+                目前無法確定究竟多少次才能看出效果，目前先強制做滿90次，在根據不同的受試者，找出多數情況下能看出效果的次數<br>
+            </li>
+            
+        </ul>
+        <a href="data/code/手臂_experiment.html">手臂實驗程式</a>
+        <a href="data/code/手臂_Train_model.html">手臂模型訓練</a>
+        <a href="data/code/手掌_experiment.html">手部實驗程式</a>
+        <a href="data/code/手掌_Train_model.html">手部模型訓練</a>
+    </div>
+    <hr>
+    
     
     <h3 class="toggle-button" data-target="h3_4">
         <span class="indicator">＋</span> 改進前面的問題後，再次進行實驗:
     </h3>
-    <div id="h3_4" style="display: block;">
+    <div id="h3_4">
         <p>同樣利用Artise (32ch)進行實驗<br />
         <h4>改進點:</h4>
         <ul>
