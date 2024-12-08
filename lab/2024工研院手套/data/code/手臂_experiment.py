@@ -801,9 +801,9 @@ class Test_function(object):
     
 if __name__ == '__main__':
 
-  # BCI_KneeBO()
-  test = Test_function()
-  test.test_ExperimentFigures()
+  BCI_KneeBO()
+  # test = Test_function()
+  # test.test_ExperimentFigures()
   # test.test_mouse()
   # test.test_KneeBO_control()
   
