@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Better Python Code Block</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai-sublime.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #2d2d2d;
+            color: #fff;
+            padding: 20px;
+        }
+        pre {
+            background: #1e1e1e;
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 1rem;
+            overflow-x: auto;
+        }
+        a {
+            color: #87CEFA;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>手臂版 Python Code</h1>
+    <a href="arm.py" download="arm.py">下載</a><br>
+    <pre><code id="code-block" class="python"></code></pre>
+</body>
+<script>
+// 抓取檔案內容並插入到程式碼塊中
+fetch('https://web-b7a.pages.dev/lab/2024工研院手套/data/code/手臂_Train_model.py')
+    .then(response => {
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.text();
+    })
+    .then(data => {
+        // 插入內容到頁面
+        document.getElementById('code-block').textContent = data;
+        // 重新高亮程式碼
+        hljs.highlightAll();
+    })
+    .catch(error => {
+        console.error('Failed to fetch the file:', error);
+    });
+</script>
+
+</html>
+
