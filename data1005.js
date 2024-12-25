@@ -219,9 +219,9 @@ var data = {
     
   },
   "info":{
-    "新裝備資訊":"info/新裝備資訊.html"
   },
   "old_info":{
+    "新裝備資訊":"info/新裝備資訊.html",
     "2024/9月更新完整內容":"info/old/九月更新完整內容.html"
   }
 };
