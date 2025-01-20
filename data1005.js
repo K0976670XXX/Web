@@ -1,14 +1,21 @@
 var data = {
   "coc_gift_pack": {
+    "2025_1_建築工人大餐":{
+          "time":"2025/1/20",
+          "url":"https://link.clashofclans.com/en/?action=voucher&code=ed17b685-b95d-4a6b-a81e-b112177a58b5",
+          "code":"ed17b685-b95d-4a6b-a81e-b112177a58b5",
+          "markdown":"建築工人大餐x1",
+          "img":[]
+    }
+  },
+  "coc_gift_pack_expired":{
     "2024_12免費寶箱":{
           "time":"2024/12/25",
           "url":"https://link.clashofclans.com/en/?action=voucher&code=3bb41503-7a3f-4540-9e4c-7252b461500a",
           "code":"3bb41503-7a3f-4540-9e4c-7252b461500a",
           "markdown":"免費的寶箱x1",
           "img":[]
-    }
-  },
-  "coc_gift_pack_expired":{
+    },
     "2024_11免費寶箱_3":{
           "time":"2024/11/08",
           "url":"https://link.clashofclans.com/en/?action=voucher&code=11219890-f0a7-4ea5-98b6-443a964ba586",
