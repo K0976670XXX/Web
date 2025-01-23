@@ -7,15 +7,22 @@ var data = {
           "markdown":"部落城堡蛋糕x1(1/27 16點過期)",
           "img":[]
     },
+    "2025_1_4能量點心":{
+          "time":"2025/1/22",
+          "url":"https://link.clashofclans.com/en/?action=voucher&code=43b43f57-c75c-41ab-b775-0eedd22b0837",
+          "code":"43b43f57-c75c-41ab-b775-0eedd22b0837",
+          "markdown":"能量點心x1(1/24 16點過期)",
+          "img":[]
+    }
+  },
+  "coc_gift_pack_expired":{
     "2025_1_3部落城堡蛋糕":{
           "time":"2025/1/22",
           "url":"https://link.clashofclans.com/en/?action=voucher&code=43b43f57-c75c-41ab-b775-0eedd22b0837",
           "code":"43b43f57-c75c-41ab-b775-0eedd22b0837",
           "markdown":"部落城堡蛋糕x1(1/23 16點過期)",
           "img":[]
-    }
-  },
-  "coc_gift_pack_expired":{
+    },
    "2025_1_2知識濃湯":{
           "time":"2025/1/21",
           "url":"https://link.clashofclans.com/?action=voucher&code=a364f5d3-ec0c-4b05-9b16-2b9581cd76b3",
