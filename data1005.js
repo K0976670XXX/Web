@@ -1,42 +1,7 @@
 var data = {
   "coc_gift_pack": {
-    "2025_1_7部落城堡蛋糕()":{
-          "time":"2025/1/22",
-          "url":"https://link.clashofclans.com/cnt/?action=voucher&code=b6dc6647-adbc-44d4-b75a-86446a0dc097",
-          "code":"b6dc6647-adbc-44d4-b75a-86446a0dc097",
-          "markdown":"部落城堡蛋糕x1(1/27 16點過期)",
-          "img":[]
-    },
-    "2025_1_4能量點心":{
-          "time":"2025/1/22",
-          "url":"https://link.clashofclans.com/en/?action=voucher&code=43b43f57-c75c-41ab-b775-0eedd22b0837",
-          "code":"43b43f57-c75c-41ab-b775-0eedd22b0837",
-          "markdown":"能量點心x1(1/24 16點過期)",
-          "img":[]
-    }
   },
   "coc_gift_pack_expired":{
-    "2025_1_3部落城堡蛋糕":{
-          "time":"2025/1/22",
-          "url":"https://link.clashofclans.com/en/?action=voucher&code=43b43f57-c75c-41ab-b775-0eedd22b0837",
-          "code":"43b43f57-c75c-41ab-b775-0eedd22b0837",
-          "markdown":"部落城堡蛋糕x1(1/23 16點過期)",
-          "img":[]
-    },
-   "2025_1_2知識濃湯":{
-          "time":"2025/1/21",
-          "url":"https://link.clashofclans.com/?action=voucher&code=a364f5d3-ec0c-4b05-9b16-2b9581cd76b3",
-          "code":"a364f5d3-ec0c-4b05-9b16-2b9581cd76b3",
-          "markdown":"知識濃湯x1(1/22 16點過期)",
-          "img":[]
-    },
-    "2025_1_1建築工人大餐":{
-          "time":"2025/1/20",
-          "url":"https://link.clashofclans.com/en/?action=voucher&code=ed17b685-b95d-4a6b-a81e-b112177a58b5",
-          "code":"ed17b685-b95d-4a6b-a81e-b112177a58b5",
-          "markdown":"建築工人大餐x1(1/21 16點過期)",
-          "img":[]
-    },
     "2024_12免費寶箱":{
           "time":"2024/12/25",
           "url":"https://link.clashofclans.com/en/?action=voucher&code=3bb41503-7a3f-4540-9e4c-7252b461500a",
