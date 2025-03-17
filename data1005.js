@@ -1,5 +1,12 @@
 var data = {
   "coc_gift_pack": {
+    "2025_03免費寶箱":{
+          "time":"2025/03/17",
+          "url":"https://link.clashofclans.com/en/?action=voucher&code=bccc7d66-0c96-47b0-aa4f-f3c17934d33c",
+          "code":"bccc7d66-0c96-47b0-aa4f-f3c17934d33c",
+          "markdown":"免費的寶箱x5",
+          "img":[]
+    }
   },
   "coc_gift_pack_expired":{
     "2024_12免費寶箱":{
