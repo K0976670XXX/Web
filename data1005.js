@@ -1,6 +1,6 @@
 var data = {
   "coc_gift_pack": {
-    "2025_03免費寶箱":{
+    "2025_03免費寶箱_02":{
           "time":"2025/03/17",
           "url":"https://link.clashofclans.com/en/?action=voucher&code=bccc7d66-0c96-47b0-aa4f-f3c17934d33c",
           "code":"bccc7d66-0c96-47b0-aa4f-f3c17934d33c",
@@ -9,6 +9,13 @@ var data = {
     }
   },
   "coc_gift_pack_expired":{
+    "2025_03免費寶箱_01":{
+          "time":"2025/03/17",
+          "url":"https://link.clashofclans.com/?action=voucher&code=97631b96-3da8-4014-921b-58f5a86c89f0",
+          "code":"97631b96-3da8-4014-921b-58f5a86c89f0",
+          "markdown":"免費的寶箱x5",
+          "img":[]
+    },
     "2024_12免費寶箱":{
           "time":"2024/12/25",
           "url":"https://link.clashofclans.com/en/?action=voucher&code=3bb41503-7a3f-4540-9e4c-7252b461500a",
