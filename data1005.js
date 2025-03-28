@@ -1,14 +1,28 @@
 var data = {
   "coc_gift_pack": {
+    "Free Magic Snack Bundle!02":{
+          "time":"2025/03/17",
+          "url":"https://link.clashofclans.com/cnt/?action=voucher&code=f6db94c9-d05e-4a2f-9926-a83e9285116c",
+          "code":"f6db94c9-d05e-4a2f-9926-a83e9285116c",
+          "markdown":"Free Magic Snack Bundle!",
+          "img":[]
+    },
+    "Free Magic Snack Bundle!01":{
+          "time":"2025/03/17",
+          "url":"https://link.clashofclans.com/cnt/?action=voucher&code=5cacf0fb-9bd5-4700-979e-b4732ec15ed8",
+          "code":"5cacf0fb-9bd5-4700-979e-b4732ec15ed8",
+          "markdown":"Free Magic Snack Bundle!",
+          "img":[]
+    }
+  },
+  "coc_gift_pack_expired":{
     "2025_03免費寶箱_02":{
           "time":"2025/03/17",
           "url":"https://link.clashofclans.com/en/?action=voucher&code=bccc7d66-0c96-47b0-aa4f-f3c17934d33c",
           "code":"bccc7d66-0c96-47b0-aa4f-f3c17934d33c",
           "markdown":"免費的寶箱x5",
           "img":[]
-    }
-  },
-  "coc_gift_pack_expired":{
+    },
     "2025_03免費寶箱_01":{
           "time":"2025/03/17",
           "url":"https://link.clashofclans.com/?action=voucher&code=97631b96-3da8-4014-921b-58f5a86c89f0",
