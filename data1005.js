@@ -1,14 +1,21 @@
 var data = {
   "coc_gift_pack": {
+    "Free Magic Snack Bundle!03":{
+          "time":"2025/03/28",
+          "url":"https://link.clashofclans.com/cnt/?action=voucher&code=28feed4e-0510-40ce-9c29-f78b396d01cd",
+          "code":"28feed4e-0510-40ce-9c29-f78b396d01cd",
+          "markdown":"Free Magic Snack Bundle!",
+          "img":[]
+    },
     "Free Magic Snack Bundle!02":{
-          "time":"2025/03/17",
+          "time":"2025/03/28",
           "url":"https://link.clashofclans.com/cnt/?action=voucher&code=f6db94c9-d05e-4a2f-9926-a83e9285116c",
           "code":"f6db94c9-d05e-4a2f-9926-a83e9285116c",
           "markdown":"Free Magic Snack Bundle!",
           "img":[]
     },
     "Free Magic Snack Bundle!01":{
-          "time":"2025/03/17",
+          "time":"2025/03/28",
           "url":"https://link.clashofclans.com/cnt/?action=voucher&code=5cacf0fb-9bd5-4700-979e-b4732ec15ed8",
           "code":"5cacf0fb-9bd5-4700-979e-b4732ec15ed8",
           "markdown":"Free Magic Snack Bundle!",
