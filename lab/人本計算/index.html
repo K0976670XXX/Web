@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <title>人本計算排行榜</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f2f2f2;
+      color: #444;
+      font-family: "Helvetica", "Arial", sans-serif;
+      font-size: 1.1rem;
+      text-align: center;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 20px;
+      background: #ffffff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    /* === 標題 === */
+    h1 {
+      margin: 0;
+      padding: 0;
+      font-size: 1.5em;
+      border-left: 5px solid #444;
+      padding-left: 10px;
+      display: inline-block;
+    }
+    /* === 排行榜 === */
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 20px auto;
+      background: #fff;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 12px;
+      text-align: center;
+      font-size: 1rem; 
+    }
+    th {
+      background-color: #e8e8e8;
+    }
+    /* === 更新區 === */
+    .update-section {
+      display: inline-block;
+      text-align: left;
+      margin: 20px auto;
+      background: #fff;
+      padding: 20px;
+      border: 1px solid #ccc;
+      max-width: 700px;
+    }
+    .update-section h3 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-size: 1.2em;
+    }
+    .form-row {
+      margin-bottom: 10px;
+    }
+    .update-section label {
+      display: inline-block;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+    .update-section select, 
+    .update-section input {
+      padding: 6px;
+      font-size: 1rem;
+      vertical-align: middle;
+    }
+    button {
+      cursor: pointer;
+      padding: 6px 12px;
+      font-size: 1rem;
+      margin-top: 8px;
+    }
+    /* 刪除挑戰紀錄按鈕 */
+    .delete-btn {
+      color: red;
+      cursor: pointer;
+      font-size: 0.9rem;
+      float: right;
+      margin-left: 10px;
+    }
+    .history-entry {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    /* 冠軍符號 */
+    .crown {
+      font-weight: bold;
+      color: #d15f00;
+      margin-left: 4px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>人本計算 Lab3 排行榜</h1>
+    <!-- 排行榜表格 -->
+    <table id="leaderboard">
+      <thead>
+        <tr>
+          <th>排名</th>
+          <th>組別</th>
+          <th>最佳時間</th>
+          <th>每次挑戰時間</th>
+          <th>挑戰次數</th>
+          <th>成員</th>
+        </tr>
+      </thead>
+      <tbody><!-- 由 JS 生成 --></tbody>
+    </table>
+    
+    <!-- 更新成績區 -->
+    <div class="update-section">
+      <h3>更新成績</h3>
+      <form id="updateForm">
+        <div class="form-row" style="display: flex; align-items: center; gap: 1px;">
+          <label for="groupSelect">組別：</label>
+          <select id="groupSelect">
+            <option value="第1組">第1組</option>
+            <option value="第2組">第2組</option>
+            <option value="第3組">第3組</option>
+            <option value="第4組">第4組</option>
+            <option value="第5組">第5組</option>
+            <option value="第6組">第6組</option>
+            <option value="第7組">第7組</option>
+            <option value="第8組">第8組</option>
+            <option value="第9組">第9組</option>
+          </select>
+          &emsp;
+          <label for="timeInput">完成時間：</label>
+          <input type="number" step="0.01" id="timeInput" style="width: 100px;">秒
+          &emsp;
+          <label><input type="checkbox" id="circleCheckbox"> 是否在圈內 </label>
+        </div>
+        <div style="margin-top: 10px; display: flex; justify-content: flex-end; gap: 10px;">
+          <button type="submit">更新</button>
+          <button id="downloadCsvBtn" type="button">輸出 CSV 檔</button>
+          <button id="reset" type="button">重置</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = "groupData";
+    // ===== 初始資料 =====
+    // history: 紀錄每次完成時間
+    // attempts: 挑戰次數
+    // members: 所有成員
+    const defaultGroups = [
+      { group: "第1組", members: ["蔡宜樺","胡郁婕","王乙棠","鄭楚穎"], history: [], attempts: 0 },
+      { group: "第2組", members: ["趙立榆","劉邦榆","賴昱凱"], history: [], attempts: 0 },
+      { group: "第3組", members: ["林奇陞","陳玠融","曾豊茗","簡惠心"], history: [], attempts: 0 },
+      { group: "第4組", members: ["林玹丞","李承璁","蘇彥誠","余梓齊"], history: [], attempts: 0 },
+      { group: "第5組", members: ["黃元楷","林品瑄","陳宏易","王博生"], history: [], attempts: 0 },
+      { group: "第6組", members: ["莊之睿","張濰安","林后辰","温蕙瑄"], history: [], attempts: 0 },
+      { group: "第7組", members: ["凌翊傑","周仕偉","王睿綸","蔡啟陽"], history: [], attempts: 0 },
+      { group: "第8組", members: ["林宸宇","李宗穎","張任褆","張沂竣"], history: [], attempts: 0 },
+      { group: "第9組", members: ["梁祐豪","晨星秋","劉倢瑜"], history: [], attempts: 0 },
+    ];
+    let groups = [];
+    // 嘗試讀取 localStorage
+    const storedData = localStorage.getItem(STORAGE_KEY);
+    if (storedData) {
+      groups = JSON.parse(storedData);
+      if (groups.length !== defaultGroups.length){
+        groups = defaultGroups;
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(groups));
+      }
+    } else {
+      groups = defaultGroups;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(groups));
+    }
+    
+    // 處理排名
+    function calculateRanks() {
+      groups.sort((a, b) => { // 挑戰次數為 0 的排在最後面
+        if (a.attempts === 0 && b.attempts !== 0) return 1;   
+        if (a.attempts !== 0 && b.attempts === 0) return -1;
+        return Math.min(...a.history) - Math.min(...b.history);
+      });
+
+      let lastTime = null;
+      let lastRank = 0;
+      let itemCount = 0;
+      
+      groups.forEach(g => {
+        itemCount++;
+        if (g.attempts === 0) {
+          g.rank = "-";     // 挑戰次數為 0 時排名紀錄為 "-"
+          return;
+        }
+        // 根據最佳時間進行排名
+        const best = Math.min(...g.history);
+        if (best === lastTime) {
+          g.rank = lastRank;
+        } else {
+          g.rank = itemCount;
+          lastRank = g.rank;
+          lastTime = best;
+        }
+      });
+    }
+    // 產生表格
+    function renderLeaderboard() {
+      calculateRanks();
+      const tbody = document.querySelector("#leaderboard tbody");
+      tbody.innerHTML = "";
+      
+      groups.forEach((g, groupIndex) => {
+        const tr = document.createElement("tr");
+        // 處裡排名顯示
+        const rankTd = document.createElement("td");
+        rankTd.innerHTML = g.rank === 1 && g.attempts > 0 ? "<span class='crown'>👑</span>" + g.rank : (g.rank === "-" ? "未挑戰" : g.rank);
+        tr.appendChild(rankTd);
+        // 處裡組別顯示
+        const groupTd = document.createElement("td");
+        groupTd.textContent = g.group;
+        tr.appendChild(groupTd);
+        // 處裡最佳時間顯示 取到小數 2 位
+        const bestTimeTd = document.createElement("td");
+        bestTimeTd.textContent = g.attempts > 0 ? Math.min(...g.history).toFixed(2) : 0;
+        tr.appendChild(bestTimeTd);
+        // 處裡每次挑戰時間顯示
+        const historyTd = document.createElement("td");
+        historyTd.innerHTML = g.history.map((t, i) => `
+          <div class="history-entry">
+            <span>&emsp;&emsp;${t.toFixed(2)}</span>
+            <span class="delete-btn" onclick="deleteTime(${groupIndex}, ${i})">X</span>
+          </div>
+        `).join("");
+        tr.appendChild(historyTd);
+        // 處裡挑戰次數顯示
+        const attemptsTd = document.createElement("td");
+        attemptsTd.textContent = g.attempts;
+        tr.appendChild(attemptsTd);
+        // 處裡成員顯示
+        const membersTd = document.createElement("td");
+        membersTd.innerHTML = g.members.join(" , ");//g.members;
+        tr.appendChild(membersTd);
+
+        tbody.appendChild(tr);
+      });
+    }
+    // 刪除紀錄按鈕控制
+    function deleteTime(groupIndex, timeIndex) {
+      const group = groups[groupIndex];
+      if (group.history.length > timeIndex) {
+        group.history.splice(timeIndex, 1);
+        group.attempts -= 1;
+        renderLeaderboard();
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(groups));
+      }
+    }
+    // 提交表單 -> 更新時間 + 挑戰次數+1
+    document.getElementById("updateForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const selectedGroup = document.getElementById("groupSelect").value;
+      let newTime = parseFloat(document.getElementById("timeInput").value);
+      const inCircle = document.getElementById("circleCheckbox").checked;
+
+      if (isNaN(newTime)) {
+        alert("請輸入有效的時間！");
+        return;
+      }
+      // 當勾選時，時間減半
+      if (inCircle) newTime *= 0.5;
+      // 更新對應組別資料
+      const target = groups.find(g => g.group === selectedGroup);
+      if (target) {
+        target.history.push(newTime);
+        target.attempts += 1;
+      }
+      // 更新後重新刷新
+      renderLeaderboard();
+      document.getElementById("timeInput").value = "";
+      document.getElementById("circleCheckbox").checked = false;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(groups));
+    });
+    // 下載 CSV 檔
+    document.getElementById("downloadCsvBtn").addEventListener("click", function() {
+      let csvContent = "\uFEFF"; // UTF-8-BOM
+      csvContent += "組別,最佳時間,每次挑戰時間,挑戰次數,成員\n";
+      groups.forEach(g => {
+        const membersStr = g.members.join("、");
+        const historyStr = g.history.map(t => t.toFixed(2)).join("\n");
+        const best = g.attempts > 0 ? Math.min(...g.history).toFixed(2) : 0;
+        csvContent += `${g.group},${best},"${historyStr}",${g.attempts},"${membersStr}"\n`;
+      });
+      const encodedUri = "data:text/csv;charset=utf-8," + encodeURIComponent(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", "leaderboard.csv");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
+    // 重置
+    document.getElementById("reset").addEventListener("click", function() {
+      groups = defaultGroups;
+      renderLeaderboard();
+    });
+    renderLeaderboard();
+  </script>
+</body>
+</html>
+
+<!--
+              ／＞---フ
+             | 　O　O| 
+           ／` ミ＿xノ 
+          /　　　　 |
+         /　 ヽ　　 ﾉ
+        │　　|　|　|
+      ／￣|　 \  |　|
+     (￣ヽ \＿＿ヽ_)__)
+      ＼二)
+   貓神保佑，程式順利不爆炸 🐾
+-->
