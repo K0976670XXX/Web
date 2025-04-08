@@ -1,5 +1,14 @@
 var data = {
   "coc_gift_pack": {
+    "Free 500 Tickets":{
+          "time":"2025/04/08",
+          "url":"https://link.clashofclans.com/en/?action=voucher&code=feafec15-d73f-4153-b156-fc86ed50e65f",
+          "code":"feafec15-d73f-4153-b156-fc86ed50e65f",
+          "markdown":"Tickets x500",
+          "img":[]
+    }
+  },
+  "coc_gift_pack_expired":{
     "Free Magic Snack Bundle!03":{
           "time":"2025/03/28",
           "url":"https://link.clashofclans.com/cnt/?action=voucher&code=28feed4e-0510-40ce-9c29-f78b396d01cd",
@@ -20,9 +29,7 @@ var data = {
           "code":"5cacf0fb-9bd5-4700-979e-b4732ec15ed8",
           "markdown":"Free Magic Snack Bundle!",
           "img":[]
-    }
-  },
-  "coc_gift_pack_expired":{
+    },
     "2025_03免費寶箱_02":{
           "time":"2025/03/17",
           "url":"https://link.clashofclans.com/en/?action=voucher&code=bccc7d66-0c96-47b0-aa4f-f3c17934d33c",
