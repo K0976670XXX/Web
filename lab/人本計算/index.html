@@ -46,15 +46,23 @@
     th {
       background-color: #e8e8e8;
     }
+    /* === 更新成績與計時器的排版容器 (並排顯示) === */
+    .row-container {
+      display: flex;               /* 使子項並排 */
+      justify-content: space-between; 
+      align-items: flex-start;     /* 對齊頂端 */
+      gap: 20px;                   /* 兩塊之間留點空隙 */
+      margin: 20px auto;           /* 與其他區塊的間距 */
+      max-width: 950px;
+    }
     /* === 更新區 === */
     .update-section {
-      display: inline-block;
+      flex: 2.5;                  /* 與計時器區按比例調整分配寬度 */
       text-align: left;
-      margin: 20px auto;
       background: #fff;
       padding: 20px;
       border: 1px solid #ccc;
-      max-width: 700px;
+      box-sizing: border-box;
     }
     .update-section h3 {
       margin-top: 0;
@@ -81,6 +89,25 @@
       font-size: 1rem;
       margin-top: 8px;
     }
+    /* === 計時器區 (放到右側) === */
+    .timer-section {
+      flex: 1;                      /* 與更新成績區按比例調整分配寬度 */
+      background: #fff;
+      padding: 20px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+    .timer-section h3 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-size: 1.2em;
+      text-align: left;
+    }
+    #timer {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
     /* 刪除挑戰紀錄按鈕 */
     .delete-btn {
       color: red;
@@ -106,7 +133,7 @@
 <body>
 
   <div class="container">
-    <h1>人本計算 Lab3 排行榜</h1>
+    <h1>人本計算 排行榜</h1>
     <!-- 排行榜表格 -->
     <table id="leaderboard">
       <thead>
@@ -122,35 +149,47 @@
       <tbody><!-- 由 JS 生成 --></tbody>
     </table>
     
-    <!-- 更新成績區 -->
-    <div class="update-section">
-      <h3>更新成績</h3>
-      <form id="updateForm">
-        <div class="form-row" style="display: flex; align-items: center; gap: 1px;">
-          <label for="groupSelect">組別：</label>
-          <select id="groupSelect">
-            <option value="第1組">第1組</option>
-            <option value="第2組">第2組</option>
-            <option value="第3組">第3組</option>
-            <option value="第4組">第4組</option>
-            <option value="第5組">第5組</option>
-            <option value="第6組">第6組</option>
-            <option value="第7組">第7組</option>
-            <option value="第8組">第8組</option>
-            <option value="第9組">第9組</option>
-          </select>
-          &emsp;
-          <label for="timeInput">完成時間：</label>
-          <input type="number" step="0.01" id="timeInput" style="width: 100px;">秒
-          &emsp;
-          <label><input type="checkbox" id="circleCheckbox"> 是否在圈內 </label>
-        </div>
-        <div style="margin-top: 10px; display: flex; justify-content: flex-end; gap: 10px;">
-          <button type="submit">更新</button>
-          <button id="downloadCsvBtn" type="button">輸出 CSV 檔</button>
-          <button id="reset" type="button">重置</button>
-        </div>
-      </form>
+    <!-- 並排：左側(更新成績區) + 右側(計時器區) -->
+    <div class="row-container">
+      <!-- 更新成績區 -->
+      <div class="update-section">
+        <h3>更新成績</h3>
+        <form id="updateForm">
+          <div class="form-row" style="display: flex; align-items: center; gap: 1px;">
+            <label for="groupSelect">組別：</label>
+            <select id="groupSelect">
+              <option value="第1組">第1組</option>
+              <option value="第2組">第2組</option>
+              <option value="第3組">第3組</option>
+              <option value="第4組">第4組</option>
+              <option value="第5組">第5組</option>
+              <option value="第6組">第6組</option>
+              <option value="第7組">第7組</option>
+              <option value="第8組">第8組</option>
+              <option value="第9組">第9組</option>
+            </select>
+            &emsp;
+            <label for="timeInput">完成時間：</label>
+            <input type="number" step="0.01" id="timeInput" style="width: 100px;">秒
+            &emsp;
+            <label><input type="checkbox" id="circleCheckbox"> 是否在圈內 </label>
+          </div>
+          <div style="margin-top: 10px; display: flex; justify-content: flex-end; gap: 10px;">
+            <button type="submit">更新</button>
+            <button id="downloadCsvBtn" type="button">輸出 CSV 檔</button>
+            <button id="reset" type="button">重置</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- 計時器 -->
+      <div class="timer-section">
+        <h3>計時器</h3>
+        <div id="timer">00:00.00</div>
+        <button id="startBtn">開始</button>
+        <button id="stopBtn">停止</button>
+        <button id="resetBtn">重置</button>
+      </div>
     </div>
   </div>
 
@@ -177,14 +216,16 @@
     if (storedData) {
       groups = JSON.parse(storedData);
       if (groups.length !== defaultGroups.length){
-        groups = defaultGroups;
+        // groups = defaultGroups; // 會導致修改 groups 同時修改到 defaultGroups
+        groups = JSON.parse(JSON.stringify(defaultGroups));
         localStorage.setItem(STORAGE_KEY, JSON.stringify(groups));
       }
     } else {
-      groups = defaultGroups;
+      // groups = defaultGroups;
+      groups = JSON.parse(JSON.stringify(defaultGroups));
       localStorage.setItem(STORAGE_KEY, JSON.stringify(groups));
     }
-    
+    // ============= 排行榜相關 =================
     // 處理排名
     function calculateRanks() {
       groups.sort((a, b) => { // 挑戰次數為 0 的排在最後面
@@ -219,12 +260,17 @@
       calculateRanks();
       const tbody = document.querySelector("#leaderboard tbody");
       tbody.innerHTML = "";
-      
       groups.forEach((g, groupIndex) => {
         const tr = document.createElement("tr");
         // 處裡排名顯示
         const rankTd = document.createElement("td");
-        rankTd.innerHTML = g.rank === 1 && g.attempts > 0 ? "<span class='crown'>👑</span>" + g.rank : (g.rank === "-" ? "未挑戰" : g.rank);
+        if (g.rank === 1 && g.attempts > 0) { // 第一名 加上皇冠
+            rankTd.innerHTML = "<span class='crown'>👑</span>" + g.rank;
+        } else if (g.rank === "-") {
+            rankTd.innerHTML = "未挑戰";
+        } else {
+            rankTd.innerHTML = g.rank;
+        }
         tr.appendChild(rankTd);
         // 處裡組別顯示
         const groupTd = document.createElement("td");
@@ -232,7 +278,11 @@
         tr.appendChild(groupTd);
         // 處裡最佳時間顯示 取到小數 2 位
         const bestTimeTd = document.createElement("td");
-        bestTimeTd.textContent = g.attempts > 0 ? Math.min(...g.history).toFixed(2) : 0;
+        if (g.attempts > 0) {
+          bestTimeTd.textContent = Math.min(...g.history).toFixed(2);
+        } else {
+          bestTimeTd.textContent = "0";
+        }
         tr.appendChild(bestTimeTd);
         // 處裡每次挑戰時間顯示
         const historyTd = document.createElement("td");
@@ -265,6 +315,7 @@
         localStorage.setItem(STORAGE_KEY, JSON.stringify(groups));
       }
     }
+    // ============= 更新表單相關 =================
     // 提交表單 -> 更新時間 + 挑戰次數+1
     document.getElementById("updateForm").addEventListener("submit", function(e) {
       e.preventDefault();
@@ -310,9 +361,69 @@
     });
     // 重置
     document.getElementById("reset").addEventListener("click", function() {
-      groups = defaultGroups;
+      groups = JSON.parse(JSON.stringify(defaultGroups));
       renderLeaderboard();
     });
+    
+    // ============= 計時器相關 =================
+    let startTime = 0;      // 記錄開始時間（ms）
+    let elapsedTime = 0;    // 記錄經過時間（ms）
+    let timerInterval;      // 紀錄計時器是否中斷的 flag
+
+    const timerDisplay = document.getElementById('timer');
+    const startBtn = document.getElementById('startBtn');
+    const stopBtn = document.getElementById('stopBtn');
+    const resetBtn = document.getElementById('resetBtn');
+
+    // 更新計時器顯示
+    function updateTimer() {
+      // 計算目前已經過的總 ms
+      elapsedTime = Date.now() - startTime;
+
+      // 將 ms 換算成時 / 分 / 秒 / 毫秒
+      let total_ms = elapsedTime;
+      //let hr = Math.floor(total_ms / 3600000);
+      //total_ms %= 3600000;
+      let min = Math.floor(total_ms / 60000);
+      total_ms %= 60000;
+      let sec = Math.floor(total_ms / 1000);
+      total_ms %= 1000;
+      let hundredth = Math.floor(total_ms / 10);
+
+      // 格式化顯示：補零
+      //let dp_hr = hr.toString().padStart(2, '0');
+      let dp_min = min.toString().padStart(2, '0');
+      let dp_sec = sec.toString().padStart(2, '0');
+      let dp_ms = hundredth.toString().padStart(2, '0');
+
+      timerDisplay.textContent = `${dp_min}:${dp_sec}.${dp_ms}`;
+    }
+    // 開始計時器
+    function startTimer() {
+      // 若尚未開始運行 timerInterval，就啟動計時
+      if (!timerInterval) {
+        startTime = Date.now() - elapsedTime;
+        timerInterval = setInterval(updateTimer, 10); // 每 10 毫秒更新一次
+      }
+    }
+    // 停止計時器
+    function stopTimer() {
+      clearInterval(timerInterval);
+      timerInterval = null; // None -> 停止
+      document.getElementById("timeInput").value = ((elapsedTime)/1000).toFixed(2);
+    }
+    // 重置計時器
+    function resetTimer() {
+      clearInterval(timerInterval);
+      timerInterval = null; // 確保碼表停止
+      startTime = 0;
+      elapsedTime = 0;
+      timerDisplay.textContent = '00:00.00';
+    }
+
+    startBtn.addEventListener('click', startTimer);
+    stopBtn.addEventListener('click', stopTimer);
+    resetBtn.addEventListener('click', resetTimer);
     renderLeaderboard();
   </script>
 </body>
