@@ -1,5 +1,12 @@
 var data = {
   "coc_gift_pack": {
+    "Free Champ Medals":{
+          "time":"2025/04/11",
+          "url":"https://link.clashofclans.com/en/?action=voucher&code=6d643b59-10f8-4e94-bf6e-ef53eac422db",
+          "code":"feafec15-d73f-4153-b156-fc86ed50e65f",
+          "markdown":"Champ Medals x150",
+          "img":[]
+    },
     "Free 500 Tickets":{
           "time":"2025/04/08",
           "url":"https://link.clashofclans.com/en/?action=voucher&code=feafec15-d73f-4153-b156-fc86ed50e65f",
