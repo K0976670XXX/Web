@@ -1,5 +1,7 @@
 var data = {
   "coc_gift_pack": {
+  },
+  "coc_gift_pack_expired":{
     "Free Champ Medals":{
           "time":"2025/04/11",
           "url":"https://link.clashofclans.com/en/?action=voucher&code=6d643b59-10f8-4e94-bf6e-ef53eac422db",
@@ -13,9 +15,7 @@ var data = {
           "code":"feafec15-d73f-4153-b156-fc86ed50e65f",
           "markdown":"Tickets x500",
           "img":[]
-    }
-  },
-  "coc_gift_pack_expired":{
+    },
     "Free Magic Snack Bundle!03":{
           "time":"2025/03/28",
           "url":"https://link.clashofclans.com/cnt/?action=voucher&code=28feed4e-0510-40ce-9c29-f78b396d01cd",
