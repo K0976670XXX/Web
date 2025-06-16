@@ -185,11 +185,6 @@ var data = {
         "img":"",
         "name":"礦石計算機"
       },
-    "部落管理(無聊的村庄建置)":{
-      "url":"tool/Clans_Manage.html",
-      "img":"",
-      "name":"查看捐收狀況及是否有打都城"
-    },
     "陣型複製":{
         "url":"https://www.clashchamps.com/i-need-a-base/",
         "img":"img/clash-champs-logo-100.png",
@@ -255,11 +250,6 @@ var data = {
         "img":"img/coc_Guide.jpg",
         "name":"Clash Of Clans Guide"
       },
-    "聯賽表現分析":{
-      "url":"https://www.clashcalc.com/",
-      "img":"img/clashcalc.webp",
-      "name":"clashcalc"
-    },
     "部落衝突API":{
         "url":"https://developer.clashofclans.com/#/documentation",
         "img":"",
