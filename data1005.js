@@ -185,6 +185,11 @@ var data = {
         "img":"",
         "name":"礦石計算機"
       },
+    "搜指定陣型":{
+        "url":"https://findthisbase.com/search",
+        "img":"img/findthisbase.png",
+        "name":"findthisbase"
+    },
     "陣型複製":{
         "url":"https://www.clashchamps.com/i-need-a-base/",
         "img":"img/clash-champs-logo-100.png",
