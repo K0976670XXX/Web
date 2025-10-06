@@ -1,5 +1,26 @@
 var data = {
   "coc_gift_pack": {
+      "10/06傳奇杯更新_1":{
+          "time":"2025/10/06",
+          "url":"https://link.clashofclans.com/cnt/?action=voucher&code=c339f93a-d3fb-4d9c-840d-ea908836a7ef",
+          "code":"c339f93a-d3fb-4d9c-840d-ea908836a7ef",
+          "markdown":"建築工人大餐×2",
+          "img":[]
+    }, 
+     "10/06傳奇杯更新_2":{
+          "time":"2025/10/06",
+          "url":"https://link.clashofclans.com/cnt/?action=voucher&code=e2dbea65-31d9-4831-981d-8f284be1fa9e",
+          "code":"e2dbea65-31d9-4831-981d-8f284be1fa9e",
+          "markdown":"能量點心×2",
+          "img":[]
+    },
+     "10/06傳奇杯更新_3":{
+          "time":"2025/10/06",
+          "url":"https://link.clashofclans.com/cnt/?action=voucher&code=ef846788-f7ca-45bb-b221-6dec9c812ce2",
+          "code":"ef846788-f7ca-45bb-b221-6dec9c812ce2",
+          "markdown":"部落城堡蛋糕×2",
+          "img":[]
+    }
   },
   "coc_gift_pack_expired":{
     "Free Champ Medals":{
