@@ -1,5 +1,12 @@
 var data = {
   "coc_gift_pack": {
+    "11/18免費寶箱x3":{
+          "time":"2025/11/18",
+          "url":"https://link.clashofclans.com/cnt/?action=voucher&code=b668de5f-e67a-4ad2-897a-30e7f1a54c2a",
+          "code":"b668de5f-e67a-4ad2-897a-30e7f1a54c2a",
+          "markdown":"免費寶箱x3",
+          "img":[]
+    }
   },
   "coc_gift_pack_expired":{
     "10/06傳奇杯更新_1":{
