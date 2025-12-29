@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>酒甘新年輪盤</title>
+
+<style>
+:root {
+    --primary-red: #d32f2f;
+    --gold: #ffd700;
+    --bg: #fffaf0;
+    --dark: #2c3e50;
+}
+
+body {
+    margin: 0;
+    padding: 20px;
+    font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
+    background: var(--bg);
+    color: var(--dark);
+}
+
+#header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+h1 {
+    color: var(--primary-red);
+    font-size: 2.8em;
+    margin: 5px 0;
+    text-shadow: 2px 2px 0 var(--gold);
+}
+#clock {
+    display: inline-block;
+    padding: 8px 20px;
+    border-radius: 30px;
+    background: #222;
+    color: var(--gold);
+    font-family: monospace;
+    font-size: 1.1em;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 420px 1fr;
+    gap: 40px;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.controls {
+    background: #fff;
+    border-radius: 20px;
+    padding: 24px;
+    border: 2px solid var(--gold);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+textarea {
+    width: 100%;
+    height: 380px; 
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 12px;
+    border: 2px solid #eee;
+    box-sizing: border-box;
+    resize: none;
+    line-height: 1.6;
+}
+
+.option-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+}
+
+#resultLog {
+    padding: 12px;
+    border-radius: 12px;
+    background: #fdfdfd;
+    border: 1px dashed #ccc;
+    height: 250px; 
+    overflow-y: auto;
+}
+
+.history-item {
+    border-bottom: 1px solid #eee;
+    padding: 8px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.wheel-outer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#pointer {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 22px solid transparent;
+    border-right: 22px solid transparent;
+    border-top: 65px solid #222;
+    z-index: 100;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
+}
+
+#wheelCanvas {
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    border: 14px solid #fff;
+    box-shadow: 0 0 50px rgba(0,0,0,0.15);
+    transition: transform 10s cubic-bezier(0.1, 0, 0, 1);
+}
+
+.action-panel {
+    margin-top: 25px;
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.probability-card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 15px;
+    border: 2px solid var(--gold);
+    text-align: center;
+}
+
+.prob-value { font-size: 3.2em; font-weight: 900; color: var(--primary-red); margin: 5px 0; }
+
+#spinBtn {
+    padding: 22px;
+    font-size: 1.8em;
+    font-weight: 900;
+    border: none;
+    border-radius: 18px;
+    color: #fff;
+    background: linear-gradient(135deg, #d32f2f, #b71c1c);
+    box-shadow: 0 6px 0 #880e4f;
+    cursor: pointer;
+}
+
+#spinBtn:active { transform: translateY(3px); box-shadow: 0 3px 0 #880e4f; }
+#spinBtn:disabled { background: #ccc; box-shadow: none; }
+
+#announceModal {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(5px);
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.4s;
+    z-index: 1000;
+}
+#announceModal.show { opacity: 1; pointer-events: auto; }
+#announceBox {
+    background: #fff;
+    padding: 60px 100px;
+    border-radius: 40px;
+    border: 6px solid var(--gold);
+    text-align: center;
+}
+#winnerName { font-size: 4.5em; font-weight: 900; color: var(--primary-red); margin: 25px 0; }
+
+.btn-small { padding: 5px 12px; cursor: pointer; background: #f5f5f5; border: 1px solid #ddd; border-radius: 6px; }
+</style>
+</head>
+
+<body>
+
+<div id="announceModal">
+    <div id="announceBox">
+        <h2 style="margin:0; color:#888;">恭喜抽中</h2>
+        <div id="winnerName">---</div>
+    </div>
+</div>
+
+<div id="header">
+    <h1>酒甘新年輪盤</h1>
+    <div id="clock">正在讀取時間...</div>
+</div>
+
+<div class="container">
+    <div class="controls">
+        <div class="label-row">
+            <strong>名單 (每一行一項)：</strong>
+            <button class="btn-small" onclick="clearList()">清除全部</button>
+        </div>
+        <textarea id="itemsInput" placeholder="請輸入名單..."></textarea>
+
+        <div class="option-row">
+            <input type="checkbox" id="hideDrawn">
+            <label for="hideDrawn">抽中後自動從名單移除</label>
+        </div>
+        
+        <div class="option-row">
+            <label>連續抽次數：</label>
+            <input type="number" id="spinCount" value="1" min="1" max="50" style="width:65px; padding:6px; border-radius: 8px; border: 1px solid #ccc;">
+        </div>
+
+        <div class="log-header">
+            <strong>抽獎紀錄：</strong>
+            <button class="btn-small" onclick="copyLog()">複製紀錄</button>
+        </div>
+        <div id="resultLog"></div>
+    </div>
+
+    <div class="wheel-outer">
+        <div id="pointer"></div>
+        <canvas id="wheelCanvas" width="500" height="500"></canvas>
+        <div class="action-panel">
+            <div class="probability-card">
+                <div style="color: #888; font-weight: bold;">當前中獎機率</div>
+                <div id="probabilityValue" class="prob-value">0.0 %</div>
+            </div>
+            <button id="spinBtn">點我開轉</button>
+        </div>
+    </div>
+</div>
+
+<script>
+const canvas = document.getElementById('wheelCanvas');
+const ctx = canvas.getContext('2d');
+const itemsInput = document.getElementById('itemsInput');
+const spinBtn = document.getElementById('spinBtn');
+const probabilityValue = document.getElementById('probabilityValue');
+const modal = document.getElementById('announceModal');
+const winnerNameSpan = document.getElementById('winnerName');
+const resultLog = document.getElementById('resultLog');
+const spinCountInput = document.getElementById('spinCount');
+
+let items = [];
+let rotation = 0;
+let isSpinning = false;
+const colors = ['#d32f2f', '#ff9800', '#fbc02d', '#c2185b', '#ffea00'];
+
+function updateClock() {
+    const options = { timeZone: 'Asia/Taipei', hour12: false, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+    document.getElementById('clock').innerText = new Date().toLocaleString('zh-TW', options);
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+function drawWheel() {
+    items = itemsInput.value.split('\n').filter(v => v.trim() !== "");
+    const n = items.length;
+    ctx.clearRect(0, 0, 500, 500);
+
+    if (n === 0) {
+        ctx.beginPath();
+        ctx.fillStyle = "#eee";
+        ctx.arc(250, 250, 240, 0, Math.PI * 2);
+        ctx.fill();
+        updateProbDisplay(0);
+        return;
+    }
+
+    const angle = (Math.PI * 2) / n;
+    items.forEach((text, i) => {
+        ctx.beginPath();
+        ctx.moveTo(250, 250);
+        ctx.fillStyle = colors[i % colors.length];
+        ctx.arc(250, 250, 240, i * angle, (i + 1) * angle);
+        ctx.fill();
+        ctx.strokeStyle = "rgba(255,255,255,0.2)";
+        ctx.stroke();
+
+        ctx.save();
+        ctx.translate(250, 250);
+        ctx.rotate(i * angle + angle / 2);
+        ctx.textAlign = "right";
+        ctx.fillStyle = (i % colors.length === 2 || i % colors.length === 4) ? "#333" : "#fff";
+        ctx.font = "bold 16px Arial";
+        const displayTxt = text.length > 12 ? text.substring(0, 11) + ".." : text;
+        ctx.fillText(displayTxt, 225, 6);
+        ctx.restore();
+    });
+
+    ctx.beginPath();
+    ctx.fillStyle = "#fff";
+    ctx.arc(250, 250, 12, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = "#ffd700";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    updateProbDisplay(n);
+}
+
+function updateProbDisplay(currentPeopleCount, overrideRemainingSpins = null) {
+    const n = currentPeopleCount;
+    const spins = overrideRemainingSpins !== null ? overrideRemainingSpins : (parseInt(spinCountInput.value) || 0);
+    if (n <= 0 || spins <= 0) {
+        probabilityValue.innerText = '0.0 %';
+    } else {
+        let p = (spins / n) * 100;
+        if (p > 100) p = 100.0;
+        probabilityValue.innerText = p.toFixed(1) + ' %';
+    }
+}
+
+async function spin() {
+    if (isSpinning || items.length === 0) return;
+    isSpinning = true;
+    spinBtn.disabled = true;
+
+    const initialSpins = parseInt(spinCountInput.value) || 1;
+    const hideOnWin = document.getElementById('hideDrawn').checked;
+
+    for (let i = 0; i < initialSpins; i++) {
+        if (items.length === 0) break;
+        updateProbDisplay(items.length, initialSpins - i);
+        rotation += 3600 + Math.floor(Math.random() * 360); 
+        canvas.style.transform = `rotate(${rotation}deg)`;
+
+        await new Promise(r => setTimeout(r, 10300));
+
+        const currentDeg = rotation % 360;
+        const sliceAngle = 360 / items.length;
+        const idx = Math.floor(( (270 - currentDeg) % 360 + 360 ) % 360 / sliceAngle);
+        const win = items[idx];
+
+        winnerNameSpan.innerText = win;
+        modal.classList.add('show');
+        const time = new Date().toLocaleTimeString('zh-TW', {hour12:false});
+        resultLog.innerHTML = `<div class="history-item"><span><b>[${i+1}]</b> ${win}</span></div>` + resultLog.innerHTML;
+
+        await new Promise(r => setTimeout(r, 2500));
+        modal.classList.remove('show');
+        await new Promise(r => setTimeout(r, 500));
+
+        if (hideOnWin) {
+            items.splice(idx, 1);
+            itemsInput.value = items.join('\n');
+            drawWheel();
+        }
+    }
+    isSpinning = false;
+    spinBtn.disabled = false;
+    updateProbDisplay(items.length);
+}
+
+function closeModal() { modal.classList.remove('show'); }
+function clearList() { if(confirm("確定要清除名單？")){ itemsInput.value = ""; drawWheel(); } }
+function copyLog() {
+    const text = Array.from(document.querySelectorAll('.history-item')).map(el => el.innerText).join('\n');
+    if (!text) return alert("無紀錄");
+    navigator.clipboard.writeText(text).then(() => alert("已複製！"));
+}
+
+itemsInput.addEventListener('input', drawWheel);
+spinCountInput.addEventListener('input', () => updateProbDisplay(items.length));
+spinBtn.addEventListener('click', spin);
+drawWheel();
+</script>
+</body>
+</html>
