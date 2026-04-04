@@ -1,0 +1,184 @@
+{
+  "images": [
+    {
+      "id": "default-puzzle",
+      "name": "Default Puzzle",
+      "file": "default-puzzle.png",
+      "alt": "Default puzzle preview"
+    },
+    {
+      "id": "image-1",
+      "name": "Image 1",
+      "file": "image (1).jpg",
+      "alt": "Puzzle image 1 preview"
+    },
+    {
+      "id": "image-2",
+      "name": "Image 2",
+      "file": "image (2).jpg",
+      "alt": "Puzzle image 2 preview"
+    },
+    {
+      "id": "image-3",
+      "name": "Image 3",
+      "file": "image (3).jpg",
+      "alt": "Puzzle image 3 preview"
+    },
+    {
+      "id": "image-4",
+      "name": "Image 4",
+      "file": "image (4).jpg",
+      "alt": "Puzzle image 4 preview"
+    },
+    {
+      "id": "image-5",
+      "name": "Image 5",
+      "file": "image (5).jpg",
+      "alt": "Puzzle image 5 preview"
+    },
+    {
+      "id": "image-6",
+      "name": "Image 6",
+      "file": "image (6).jpg",
+      "alt": "Puzzle image 6 preview"
+    },
+    {
+      "id": "image-7",
+      "name": "Image 7",
+      "file": "image (7).jpg",
+      "alt": "Puzzle image 7 preview"
+    },
+    {
+      "id": "image-8",
+      "name": "Image 8",
+      "file": "image (8).jpg",
+      "alt": "Puzzle image 8 preview"
+    },
+    {
+      "id": "image-9",
+      "name": "Image 9",
+      "file": "image (9).jpg",
+      "alt": "Puzzle image 9 preview"
+    },
+    {
+      "id": "image-10",
+      "name": "Image 10",
+      "file": "image (10).jpg",
+      "alt": "Puzzle image 10 preview"
+    },
+    {
+      "id": "image-11",
+      "name": "Image 11",
+      "file": "image (11).jpg",
+      "alt": "Puzzle image 11 preview"
+    },
+    {
+      "id": "image-12",
+      "name": "Image 12",
+      "file": "image (12).jpg",
+      "alt": "Puzzle image 12 preview"
+    },
+    {
+      "id": "image-13",
+      "name": "Image 13",
+      "file": "image (13).jpg",
+      "alt": "Puzzle image 13 preview"
+    },
+    {
+      "id": "image-14",
+      "name": "Image 14",
+      "file": "image (14).jpg",
+      "alt": "Puzzle image 14 preview"
+    },
+    {
+      "id": "image-15",
+      "name": "Image 15",
+      "file": "image (15).jpg",
+      "alt": "Puzzle image 15 preview"
+    },
+    {
+      "id": "image-16",
+      "name": "Image 16",
+      "file": "image (16).jpg",
+      "alt": "Puzzle image 16 preview"
+    },
+    {
+      "id": "image-17",
+      "name": "Image 17",
+      "file": "image (17).jpg",
+      "alt": "Puzzle image 17 preview"
+    },
+    {
+      "id": "image-18",
+      "name": "Image 18",
+      "file": "image (18).jpg",
+      "alt": "Puzzle image 18 preview"
+    },
+    {
+      "id": "image-19",
+      "name": "Image 19",
+      "file": "image (19).jpg",
+      "alt": "Puzzle image 19 preview"
+    },
+    {
+      "id": "image-20",
+      "name": "Image 20",
+      "file": "image (20).jpg",
+      "alt": "Puzzle image 20 preview"
+    },
+    {
+      "id": "image-21",
+      "name": "Image 21",
+      "file": "image (21).jpg",
+      "alt": "Puzzle image 21 preview"
+    },
+    {
+      "id": "image-22",
+      "name": "Image 22",
+      "file": "image (22).jpg",
+      "alt": "Puzzle image 22 preview"
+    },
+    {
+      "id": "image-23",
+      "name": "Image 23",
+      "file": "image (23).jpg",
+      "alt": "Puzzle image 23 preview"
+    },
+    {
+      "id": "image-24",
+      "name": "Image 24",
+      "file": "image (24).jpg",
+      "alt": "Puzzle image 24 preview"
+    },
+    {
+      "id": "image-25",
+      "name": "Image 25",
+      "file": "image (25).jpg",
+      "alt": "Puzzle image 25 preview"
+    },
+    {
+      "id": "image-26",
+      "name": "Image 26",
+      "file": "image (26).jpg",
+      "alt": "Puzzle image 26 preview"
+    },
+    {
+      "id": "image-27",
+      "name": "Image 27",
+      "file": "image (27).jpg",
+      "alt": "Puzzle image 27 preview"
+    },
+    {
+      "id": "image-28",
+      "name": "Image 28",
+      "file": "image (28).jpg",
+      "alt": "Puzzle image 28 preview"
+    },
+    {
+      "id": "image-29",
+      "name": "Image 29",
+      "file": "image (29).jpg",
+      "alt": "Puzzle image 29 preview"
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sliding Puzzle</title>
+  <link rel="stylesheet" href="styles.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7343628224568601" crossorigin="anonymous"></script>
+</head>
+<body>
+  <main class="app">
+    <header class="header">
+      <h1>Sliding Puzzle</h1>
+      <p>挑戰最少步數與最快時間，完成每一局拼圖。</p>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <section class="panel controls-panel" aria-label="遊戲設定">
+          <div class="field-group">
+            <label for="playerName">玩家名稱</label>
+            <div class="inline-field">
+              <input id="playerName" type="text" maxlength="20" placeholder="請輸入你的名字">
+              <button id="saveNameBtn" type="button" class="secondary-btn">儲存名字</button>
+            </div>
+            <p class="field-hint">名稱會保存在目前瀏覽器中。</p>
+          </div>
+
+          <div class="field-group">
+            <label for="sizeSelect">遊戲尺寸</label>
+            <select id="sizeSelect">
+              <option value="3">3 x 3</option>
+              <option value="4" selected>4 x 4</option>
+              <option value="5">5 x 5</option>
+              <option value="6">6 x 6</option>
+            </select>
+          </div>
+
+          <div class="button-row">
+            <button id="shuffleBtn" type="button">開始新局</button>
+            <button id="solveBtn" type="button" class="success-btn">自動還原</button>
+          </div>
+        </section>
+
+        <section class="panel status-panel" aria-live="polite">
+          <div class="status-item">
+            <span class="status-label">步數</span>
+            <strong id="moves">0</strong>
+          </div>
+          <div class="status-item">
+            <span class="status-label">時間</span>
+            <strong id="timer">00:00:00</strong>
+          </div>
+          <p id="message" class="message"></p>
+          <p id="rankUpdateStatus" class="rank-update-status"></p>
+        </section>
+
+        <section class="panel preview" aria-label="拼圖原圖預覽">
+          <div class="preview-frame">
+            <img id="previewImage" alt="拼圖原圖預覽">
+          </div>
+        </section>
+      </aside>
+
+      <section class="game-area">
+        <div class="board-wrap">
+          <div id="board" class="board" role="grid" aria-label="Sliding puzzle board"></div>
+        </div>
+      </section>
+    </div>
+
+    <section class="panel leaderboard-panel" aria-label="排行榜">
+      <div class="panel-header">
+        <h2>排行榜</h2>
+        <div class="panel-actions">
+          <button id="toggleLeaderboardModeBtn" type="button" class="ghost-btn">查看速度榜</button>
+          <button id="refreshRankBtn" type="button" class="ghost-btn">重新整理</button>
+        </div>
+      </div>
+      <p id="leaderboardStatus" class="field-hint" aria-live="polite"></p>
+      <ol id="leaderboardList" class="leaderboard-list"></ol>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
